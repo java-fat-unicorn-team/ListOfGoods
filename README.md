@@ -1,4 +1,5 @@
 # ListOfGoods
+
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
@@ -14,10 +15,11 @@ This project is a simple console application that provides ability to manages a 
 	
 ## Technologies
 Project is created with:
-* Spring core
-* Maven
-* Git
-* JUnit
+* Java 11
+* Spring Core 5
+* Maven 3.5
+* Git 2+
+* JUnit 5
 	
 ## Setup
 To run this project, install and run it locally using maven:

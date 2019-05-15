@@ -1,0 +1,27 @@
+[
+  {
+    "name": "phone",
+    "price": 350,
+    "weight": 320
+  },
+  {
+    "name": "sneakers",
+    "price": 200,
+    "weight": 250
+  },
+  {
+    "name": "chair",
+    "price": 150,
+    "weight": 900
+  },
+  {
+    "name": "ball",
+    "price": 150,
+    "weight": 400
+  },
+  {
+    "name": "pan",
+    "price": 10,
+    "weight": 30
+  }
+]

@@ -1,42 +1,54 @@
 package com.spring.core.service.impl;
 
-import com.spring.core.dao.ProductDao;
-import com.spring.core.model.ListOfGoods;
+import com.spring.core.dao.BasketDao;
+import com.spring.core.dao.impl.InMemoryBasketDaoImpl;
 import com.spring.core.model.Product;
 import com.spring.core.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+/**
+ * this class contains InMemoryBasketDaoImpl class which provides all the functionality of the basket
+ * @see InMemoryBasketDaoImpl <-- There
+ * it is necessary to quickly change place of storing data
+ * @author Katuranau Maksimilyan
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductDao productDao;
+    private final BasketDao basket;
 
+    /**
+     *
+     * @param basket is an object provides all the functionality of the basket
+     */
     @Autowired
-    public ProductServiceImpl(ProductDao productDao) {
-        this.productDao = productDao;
+    public ProductServiceImpl(BasketDao basket) {
+        this.basket = basket;
     }
 
-    public ListOfGoods getListOfProducts() {
+    public List<Product> getProducts() {
 
-        return productDao.getListOfProducts();
+        return basket.getProducts();
     }
 
-    public Product getProduct(int number) {
-        return productDao.getProduct(number);
+    public Product getProduct(int index) {
+        return basket.getProduct(index);
     }
 
-    public void updateProduct(Product product, int number) {
-        productDao.updateProduct(product, number);
+    public void updateProduct(int index, Product product) {
+        basket.updateProduct(index, product);
 
     }
 
     public void addProduct(Product product) {
-        productDao.addProduct(product);
+        basket.addProduct(product);
     }
 
-    public void deleteProduct(int number) {
-        productDao.deleteProduct(number);
+    public void deleteProduct(int index) {
+        basket.deleteProduct(index);
     }
 
 }

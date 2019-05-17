@@ -1,15 +1,14 @@
-package com.spring.core.service;
+package com.spring.core.dao;
 
 import com.spring.core.model.Product;
 
 import java.util.List;
 
 /**
- *
+ * this interface provides methods to manage products basket
  * @author Katuranau Maksimilyan
  */
-public interface ProductService {
-
+public interface BasketDao {
     /**
      *
      * @return List<Product> value is list of products

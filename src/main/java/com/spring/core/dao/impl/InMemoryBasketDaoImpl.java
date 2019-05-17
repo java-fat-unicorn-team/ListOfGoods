@@ -19,6 +19,10 @@ public class InMemoryBasketDaoImpl implements BasketDao {
         basket = new ArrayList<>();
     }
 
+    public InMemoryBasketDaoImpl(List<Product> basket) {
+        this.basket = basket;
+    }
+
     @Override
     public List<Product> getProducts() {
         return basket;

@@ -1,8 +1,7 @@
 package com.spring.core;
 
 import com.spring.core.config.AppConfig;
-import com.spring.core.model.Product;
-import com.spring.core.service.ProductService;
+import com.spring.core.userinterface.UserInterface;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -25,24 +24,7 @@ public class App {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
-        //Get object which contains list of goods and provides ability to manage them
-        ProductService productService = context.getBean(ProductService.class);
-
-        System.out.println("\nOriginal list of products:");
-        productService.getProducts().forEach(System.out::println);
-
-        System.out.println("\nSecond product is updated:");
-        //Update product number 2
-        productService.updateProduct(2, new Product("chocolate", 7, 80));
-        productService.getProducts().forEach(System.out::println);
-
-        System.out.println("\nSecond product is deleted:");
-        //Delete product number 2
-        productService.deleteProduct(2);
-        productService.getProducts().forEach(System.out::println);
-
-        System.out.println("\nThird product:");
-        System.out.println(productService.getProduct(3));
-
+        UserInterface userInterface = context.getBean(UserInterface.class);
+        userInterface.start();
     }
 }

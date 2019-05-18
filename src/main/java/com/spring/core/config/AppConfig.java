@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Scanner;
 
 @ComponentScan("com.spring.core")
 @Configuration
@@ -22,5 +24,15 @@ public class AppConfig {
     @Autowired
     public BasketDao getBasket(DataInitializer dataInitializer) throws IOException {
         return dataInitializer.initializeProducts();
+    }
+
+    @Bean
+    public PrintStream getPrintStream() {
+        return new PrintStream(System.out);
+    }
+
+    @Bean
+    public Scanner getScanner() {
+        return new Scanner(System.in);
     }
 }

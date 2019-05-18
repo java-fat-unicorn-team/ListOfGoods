@@ -2,7 +2,6 @@ package com.spring.core;
 
 import com.spring.core.dao.impl.InMemoryBasketDaoImpl;
 import com.spring.core.model.Product;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -28,7 +27,7 @@ public class BasketTest {
     }
 
     @Test
-    public void testGetProducts(){
+    public void testGetProducts() {
         assertEquals(basket.getProducts(), list);
     }
 

@@ -13,7 +13,13 @@ public interface BasketDao {
      *
      * @return List<Product> value is list of products
      */
-    List<Product> getProducts();
+    List<Product> getAllProducts();
+
+    /**
+     *
+     * @return List<Product> value is list of products from basket
+     */
+    List<Product> getProductsFromBasket();
 
     /**
      *
@@ -24,20 +30,20 @@ public interface BasketDao {
 
     /**
      *
-     * @param index is index of product to be updated
-     * @param product is new project you provide to replace old
+     * @param index is index of product from basket to be updated
+     * @param indexInBasket is index of product to be added
      */
-    void updateProduct(int index, Product product);
+    void updateProduct(int index, int indexInBasket);
 
     /**
      *
-     * @param product is product to be added to basket
+     * @param indexInBasket is index of product to be added
      */
-    void addProduct(Product product);
+    void addProduct(int indexInBasket);
 
     /**
      *
-     * @param index product's index to be added to basket deleted
+     * @param index product's index from basket to be deleted
      */
     void deleteProduct(int index);
 }

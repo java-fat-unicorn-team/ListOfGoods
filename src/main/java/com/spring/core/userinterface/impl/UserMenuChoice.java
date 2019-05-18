@@ -6,12 +6,13 @@ package com.spring.core.userinterface.impl;
  * @author Katuranau Maksimilyan
  */
 public enum UserMenuChoice {
-    PRINT_ALL("1", "1)Print basket"),
-    PRINT("2", "2)Print product"),
-    DELETE("3", "3)Delete product"),
-    ADD("4", "4)Add product"),
-    UPDATE("5", "5)Update product"),
-    CLOSE_APP("6", "6)Close program"),
+    PRINT_ALL("1", "1)Print all products"),
+    PRINT_BASKET("2", "2)Print products from basket"),
+    PRINT("3", "3)Print product"),
+    DELETE("4", "4)Delete product"),
+    ADD("5", "5)Add product"),
+    UPDATE("6", "6)Update product"),
+    CLOSE_APP("7", "7)Close program"),
     UNDEFINED("", "");
 
     String choice;

@@ -49,8 +49,13 @@ public class ConsoleUserInterface implements UserInterface {
     }
 
     @Override
-    public void printBasket() {
-        productService.getProducts().forEach(outputStream::println);
+    public void printProductsFromBasket() {
+        productService.getProductsFromBasket().forEach(outputStream::println);
+    }
+
+    @Override
+    public void printAllProducts() {
+        productService.getAllProducts().forEach(outputStream::println);
     }
 
     @Override
@@ -73,7 +78,10 @@ public class ConsoleUserInterface implements UserInterface {
     public void runChoice(UserMenuChoice userChoice) {
         switch (userChoice) {
             case PRINT_ALL:
-                printBasket();
+                printAllProducts();
+                break;
+            case PRINT_BASKET:
+                printProductsFromBasket();
                 break;
             case PRINT:
                 printProduct();
@@ -98,36 +106,75 @@ public class ConsoleUserInterface implements UserInterface {
     @Override
     public void printProduct() {
         outputStream.println("Enter product's index to be printed");
-        outputStream.println(productService.getProduct(scanner.nextInt()));
-    }
-
-    @Override
-    public void updateProduct() {
-        outputStream.print("Enter product's index to be updated: ");
-        Product product = productService.getProduct(scanner.nextInt());
-        outputStream.print("Update product's name(" + product.getName() + "): ");
-        product.setName(scanner.next());
-        outputStream.print("Update product's price(" + product.getPrice() + "): ");
-        product.setPrice(scanner.nextInt());
-        outputStream.print("Update product's weight(" + product.getWeight() + "): ");
-        product.setWeight(scanner.nextInt());
-    }
-
-    @Override
-    public void addProduct() {
-        Product product = new Product();
-        outputStream.print("Adding product...\nEnter product's name: ");
-        product.setName(scanner.next());
-        outputStream.print("Enter product's price: ");
-        product.setPrice(scanner.nextInt());
-        outputStream.print("Enter product's weight: ");
-        product.setWeight(scanner.nextInt());
-        productService.addProduct(product);
+        try {
+            outputStream.println(productService.getProduct(scanner.nextInt()));
+        } catch(Exception e) {
+            outputStream.println("You entered wrong index...");
+        }
     }
 
     @Override
     public void deleteProduct() {
-        outputStream.println("Enter product's index to be deleted");
-        productService.deleteProduct(scanner.nextInt());
+        outputStream.println("Enter product's index to be deleted from basket");
+        try {
+            productService.deleteProduct(scanner.nextInt());
+        } catch(Exception e) {
+            outputStream.println("You entered wrong index...");
+        }
+    }
+
+    @Override
+    public void addProduct() {
+        outputStream.print("Enter product's index to be added to basket: ");
+        try {
+            productService.addProduct(scanner.nextInt());
+        } catch(Exception e) {
+            outputStream.println("You entered wrong index...");
+        }
+        /*
+        Product product = new Product();
+        outputStream.print("Adding product...\nEnter product's name: ");
+        product.setName(scanner.next());
+        try {
+            outputStream.print("Enter product's price: ");
+            product.setPrice(scanner.nextInt());
+            outputStream.print("Enter product's weight: ");
+            product.setWeight(scanner.nextInt());
+            productService.addProduct(product);
+        } catch (Exception e){
+            scanner.next();
+            outputStream.println("You entered wrong data...");
+        }
+        */
+    }
+
+    @Override
+    public void updateProduct() {
+        try {
+            outputStream.print("Enter product's index to be updated: ");
+            int index = scanner.nextInt();
+            outputStream.print("Enter new product's index which will update old product: ");
+            productService.updateProduct(index, scanner.nextInt());
+        } catch(Exception e) {
+            outputStream.println("You entered wrong index...");
+        }
+        /*
+        Product product;
+        outputStream.print("Enter product's index to be updated: ");
+        try {
+            product = productService.getProduct(scanner.nextInt());
+            outputStream.print("Update product's name(" + product.getName() + "): ");
+            product.setName(scanner.next());
+            outputStream.print("Update product's price(" + product.getPrice() + "): ");
+            product.setPrice(scanner.nextInt());
+            outputStream.print("Update product's weight(" + product.getWeight() + "): ");
+            product.setWeight(scanner.nextInt());
+        } catch(IndexOutOfBoundsException e) {
+            outputStream.println("You entered wrong index...");
+        } catch (Exception ex){
+            scanner.next();
+            outputStream.println("You entered wrong data...");
+        }
+         */
     }
 }

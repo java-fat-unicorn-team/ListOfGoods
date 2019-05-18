@@ -33,9 +33,14 @@ public interface UserInterface {
     void runChoice(UserMenuChoice userChoice);
 
     /**
+     * This method prints all products
+     */
+    void printAllProducts();
+
+    /**
      * This method prints all products from basket
      */
-    void printBasket();
+    void printProductsFromBasket();
 
     /**
      * This method prints only one product you chose

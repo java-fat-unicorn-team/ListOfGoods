@@ -11,9 +11,10 @@ import java.util.List;
 
 /**
  * this class contains InMemoryBasketDaoImpl class which provides all the functionality of the basket
+ *
+ * @author Katuranau Maksimilyan
  * @see InMemoryBasketDaoImpl <-- There
  * it is necessary to quickly change place of storing data
- * @author Katuranau Maksimilyan
  */
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -21,7 +22,6 @@ public class ProductServiceImpl implements ProductService {
     private final BasketDao basket;
 
     /**
-     *
      * @param basket is an object provides all the functionality of the basket
      */
     @Autowired
@@ -29,25 +29,30 @@ public class ProductServiceImpl implements ProductService {
         this.basket = basket;
     }
 
-    public List<Product> getProducts() {
+    public List<Product> getAllProducts() {
 
-        return basket.getProducts();
+        return basket.getAllProducts();
     }
 
-    public Product getProduct(int index) {
+    public List<Product> getProductsFromBasket() {
+
+        return basket.getProductsFromBasket();
+    }
+
+    public Product getProduct(int index) throws IndexOutOfBoundsException {
         return basket.getProduct(index);
     }
 
-    public void updateProduct(int index, Product product) {
-        basket.updateProduct(index, product);
+    public void updateProduct(int index,  int indexInBasket) throws IndexOutOfBoundsException {
+        basket.updateProduct(index, indexInBasket);
 
     }
 
-    public void addProduct(Product product) {
-        basket.addProduct(product);
+    public void addProduct(int indexInBasket) {
+        basket.addProduct(indexInBasket);
     }
 
-    public void deleteProduct(int index) {
+    public void deleteProduct(int index) throws IndexOutOfBoundsException {
         basket.deleteProduct(index);
     }
 

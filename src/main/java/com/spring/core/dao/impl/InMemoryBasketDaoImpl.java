@@ -1,7 +1,11 @@
 package com.spring.core.dao.impl;
 
 import com.spring.core.dao.BasketDao;
+import com.spring.core.dao.ListOfGoodsDao;
+import com.spring.core.model.ListOfGoods;
 import com.spring.core.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +16,27 @@ import java.util.Objects;
  * @see BasketDao <-- There
  * @author Katuranau Maksimilyan
  */
+@Component
 public class InMemoryBasketDaoImpl implements BasketDao {
 
     private final List<Product> basket;
+    private final ListOfGoodsDao listOfProducts;
 
-    public InMemoryBasketDaoImpl() {
+
+    @Autowired
+    public InMemoryBasketDaoImpl(ListOfGoodsDao listOfProducts) {
         basket = new ArrayList<>();
-    }
-
-    public InMemoryBasketDaoImpl(List<Product> basket) {
-        this.basket = basket;
+        this.listOfProducts = listOfProducts;
     }
 
     @Override
-    public List<Product> getProducts() {
+    public List<Product> getProductsFromBasket() {
         return basket;
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return listOfProducts.getProducts();
     }
 
     @Override
@@ -35,13 +45,13 @@ public class InMemoryBasketDaoImpl implements BasketDao {
     }
 
     @Override
-    public void updateProduct(int index, Product product) {
-        basket.set(index, product);
+    public void updateProduct(int index, int indexInBasket) {
+        basket.set(index, listOfProducts.getProduct(indexInBasket));
     }
 
     @Override
-    public void addProduct(Product product) {
-        basket.add(product);
+    public void addProduct(int indexInBasket) {
+        basket.add(listOfProducts.getProduct(indexInBasket));
     }
 
     @Override

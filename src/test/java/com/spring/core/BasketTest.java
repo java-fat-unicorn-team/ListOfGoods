@@ -3,6 +3,7 @@ package com.spring.core;
 import com.spring.core.dao.impl.InMemoryBasketDaoImpl;
 import com.spring.core.model.Product;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -10,18 +11,19 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class testBasket {
-    private String[] name = {"phone", "pan", "computer"};
-    private int[] price = {790, 9, 3200};
-    private int[] weight = {340, 15, 2100};
-    InMemoryBasketDaoImpl basket;
-    List<Product> list= new ArrayList<Product>() {{
-        for (int i = 0; i < 3; i++)
-            add(new Product(name[i], price[i], weight[i]));
-    }};
+public class BasketTest {
+    private static final String[] name = {"phone", "pan", "computer"};
+    private static final int[] price = {790, 9, 3200};
+    private static final int[] weight = {340, 15, 2100};
+    private static InMemoryBasketDaoImpl basket;
+    private static List<Product> list;
 
-    @Before
-    public void initialBasket() {
+    @BeforeClass
+    public static void initialBasket() {
+        list = new ArrayList<Product>() {{
+            for (int i = 0; i < 3; i++)
+                add(new Product(name[i], price[i], weight[i]));
+        }};
         basket = new InMemoryBasketDaoImpl(list);
     }
 

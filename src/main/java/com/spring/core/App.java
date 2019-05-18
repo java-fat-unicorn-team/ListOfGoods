@@ -1,16 +1,10 @@
 package com.spring.core;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.core.config.AppConfig;
-import com.spring.core.dao.BasketDao;
-import com.spring.core.dao.impl.InMemoryBasketDaoImpl;
 import com.spring.core.model.Product;
 import com.spring.core.service.ProductService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * This project is spring console application

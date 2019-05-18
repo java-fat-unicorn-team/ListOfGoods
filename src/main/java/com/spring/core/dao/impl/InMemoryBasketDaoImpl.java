@@ -5,6 +5,7 @@ import com.spring.core.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class implements BasketDao interface which provides methods to manage products basket
@@ -29,7 +30,7 @@ public class InMemoryBasketDaoImpl implements BasketDao {
     }
 
     @Override
-    public Product getProduct(int index) {
+    public Product getProduct(int index) throws IndexOutOfBoundsException {
         return basket.get(index);
     }
 
@@ -46,5 +47,18 @@ public class InMemoryBasketDaoImpl implements BasketDao {
     @Override
     public void deleteProduct(int index) {
         basket.remove(index);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InMemoryBasketDaoImpl that = (InMemoryBasketDaoImpl) o;
+        return Objects.equals(basket, that.basket);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(basket);
     }
 }

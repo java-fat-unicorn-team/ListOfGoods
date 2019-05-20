@@ -1,23 +1,22 @@
 package com.spring.core.service.impl;
 
 import com.spring.core.dao.BasketDao;
-import com.spring.core.dao.impl.InMemoryBasketDaoImpl;
 import com.spring.core.model.Product;
-import com.spring.core.service.ProductService;
+import com.spring.core.service.BasketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * this class contains InMemoryBasketDaoImpl class which provides all the functionality of the basket
- *
+ * This class provides all the functionality
+ * Then it is used to make user interface
+ * This class manages data is received from memory
  * @author Katuranau Maksimilyan
- * @see InMemoryBasketDaoImpl <-- There
- * it is necessary to quickly change place of storing data
+ * {@see InMemoryBasketDao}
  */
 @Service
-public class ProductServiceImpl implements ProductService {
+public class BasketServiceImpl implements BasketService {
 
     private final BasketDao basket;
 
@@ -25,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
      * @param basket is an object provides all the functionality of the basket
      */
     @Autowired
-    public ProductServiceImpl(BasketDao basket) {
+    public BasketServiceImpl(BasketDao basket) {
         this.basket = basket;
     }
 

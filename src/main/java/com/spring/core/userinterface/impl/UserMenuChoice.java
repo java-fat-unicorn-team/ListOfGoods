@@ -2,7 +2,6 @@ package com.spring.core.userinterface.impl;
 
 /**
  * This enum contains menu item which user can choose
- *
  * @author Katuranau Maksimilyan
  */
 public enum UserMenuChoice {

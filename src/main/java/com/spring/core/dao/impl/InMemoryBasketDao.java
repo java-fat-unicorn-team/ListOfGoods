@@ -2,29 +2,28 @@ package com.spring.core.dao.impl;
 
 import com.spring.core.dao.BasketDao;
 import com.spring.core.dao.ListOfGoodsDao;
-import com.spring.core.model.ListOfGoods;
 import com.spring.core.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * This class implements BasketDao interface which provides methods to manage products basket
- * @see BasketDao <-- There
+ * This class provides methods to manage products basket
+ * products are stored in memory
  * @author Katuranau Maksimilyan
+ * {@see BasketDao}
  */
 @Component
-public class InMemoryBasketDaoImpl implements BasketDao {
+public class InMemoryBasketDao implements BasketDao {
 
     private final List<Product> basket;
     private final ListOfGoodsDao listOfProducts;
 
 
     @Autowired
-    public InMemoryBasketDaoImpl(ListOfGoodsDao listOfProducts) {
+    public InMemoryBasketDao(ListOfGoodsDao listOfProducts) {
         basket = new ArrayList<>();
         this.listOfProducts = listOfProducts;
     }
@@ -57,18 +56,5 @@ public class InMemoryBasketDaoImpl implements BasketDao {
     @Override
     public void deleteProduct(int index) {
         basket.remove(index);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InMemoryBasketDaoImpl that = (InMemoryBasketDaoImpl) o;
-        return Objects.equals(basket, that.basket);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(basket);
     }
 }

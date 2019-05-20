@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
@@ -35,7 +36,7 @@ public class AppConfig {
     }
 
     @Bean
-    public Scanner getScanner() {
-        return new Scanner(System.in);
+    public InputStream getInputStream() {
+        return System.in;
     }
 }

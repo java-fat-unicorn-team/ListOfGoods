@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.spring.core.TestSuite
--------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in com.spring.core.TestSuite
-testInitializeProducts(com.spring.core.DataInitializerTest)  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.IllegalArgumentException: Resource location must not be null
-	at com.spring.core.DataInitializerTest.initialDataInitializer(DataInitializerTest.java:27)
-

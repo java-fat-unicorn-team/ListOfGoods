@@ -3,8 +3,7 @@ package com.spring.core.userinterface;
 import com.spring.core.userinterface.impl.UserMenuChoice;
 
 /**
- * this interface provides methods to manage products basket from console
- *
+ * Use this interface if you want to create a new way to interaction with users
  * @author Katuranau Maksimilyan
  */
 public interface UserInterface {

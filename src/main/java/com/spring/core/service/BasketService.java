@@ -5,10 +5,10 @@ import com.spring.core.model.Product;
 import java.util.List;
 
 /**
- *
+ * Use this interface if you want to create a new service
  * @author Katuranau Maksimilyan
  */
-public interface ProductService {
+public interface BasketService {
 
     /**
      *

@@ -44,7 +44,7 @@ public class DataInitializerTest {
         assertEquals(listOfGoods.getListOfGoods().get(0).getName(), listOfGoodsTest.getListOfGoods().get(0).getName());
         assertEquals(listOfGoods.getListOfGoods().get(1).getPrice(), listOfGoodsTest.getListOfGoods().get(1).getPrice());
         assertEquals(listOfGoods.getListOfGoods().get(expectedSize-1).getWeight(),
-                listOfGoodsTest.getListOfGoods().get(actualSize-1).getWeight());
+                listOfGoodsTest.getListOfGoods().get(actualSize-1).getWeight(), 0.001);
 
     }
 }

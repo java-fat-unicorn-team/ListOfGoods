@@ -1,7 +1,6 @@
-package com.spring.core;
+package com.spring.core.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spring.core.config.DataInitializer;
 import com.spring.core.console_input.ConsoleInputValidator;
 import com.spring.core.model.ListOfGoods;
 import org.mockito.Mockito;

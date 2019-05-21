@@ -3,6 +3,7 @@ package com.spring.core.model;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -15,8 +16,8 @@ import java.util.Objects;
 @Scope("prototype")
 public class Product {
     private String name;
-    private int price;
-    private int weight;
+    private BigDecimal price;
+    private double weight;
 
     public Product() {
     }
@@ -27,7 +28,7 @@ public class Product {
      * @param price is product's price
      * @param weight is product's weight
      */
-    public Product(String name, int price, int weight) {
+    public Product(String name, BigDecimal price, double weight) {
         this.name = name;
         this.price = price;
         this.weight = weight;
@@ -41,19 +42,19 @@ public class Product {
         this.name = name;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
@@ -64,7 +65,7 @@ public class Product {
      */
     @Override
     public String toString() {
-        return name + ": " + price + "$, " + weight + "g.";
+        return name + ": " + price + "$, " + weight + "kg.";
     }
 
     @Override

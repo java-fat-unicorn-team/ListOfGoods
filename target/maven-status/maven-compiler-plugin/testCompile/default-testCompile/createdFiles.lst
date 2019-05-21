@@ -5,6 +5,6 @@ com/spring/core/ListOfGoodsTest$1.class
 com/spring/core/BasketTest.class
 com/spring/core/BasketTest$1.class
 com/spring/core/UserInterfaceTestIT.class
+com/spring/core/config/TestConfig.class
 com/spring/core/UserInterfaceTest.class
 com/spring/core/BasketServiceTest$1.class
-com/spring/core/TestConfig.class

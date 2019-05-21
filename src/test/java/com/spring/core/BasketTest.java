@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +29,10 @@ public class BasketTest {
 
     @BeforeClass
     public static void initialBasket() throws Exception {
-        list = new ArrayList<Product>() {{
-            add(new Product("phone", 790, 340));
-            add(new Product("pan", 9, 15));
-            add(new Product("computer", 3200, 2100));
+        list = new ArrayList<>() {{
+            add(new Product("phone", new BigDecimal(790.22), 0.4));
+            add(new Product("pan", new BigDecimal(9.12), 0.03));
+            add(new Product("computer", new BigDecimal(3200.00), 2.3));
         }};
         listOfGoods = Mockito.mock(ListOfGoodsDao.class);
         basket = new InMemoryBasketDao(listOfGoods);

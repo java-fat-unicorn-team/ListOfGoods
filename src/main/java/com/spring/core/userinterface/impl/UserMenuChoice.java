@@ -50,4 +50,12 @@ public enum UserMenuChoice {
         }
         return UNDEFINED;
     }
+
+    @Override
+    public String toString() {
+        return "UserMenuChoice{" +
+                "choice='" + choice + '\'' +
+                ", information='" + information + '\'' +
+                '}';
+    }
 }

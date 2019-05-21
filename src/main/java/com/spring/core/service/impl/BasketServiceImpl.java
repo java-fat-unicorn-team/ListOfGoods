@@ -38,20 +38,20 @@ public class BasketServiceImpl implements BasketService {
         return basket.getProductsFromBasket();
     }
 
-    public Product getProduct(int index) throws IndexOutOfBoundsException {
+    public Product getProduct(int index) throws Exception {
         return basket.getProduct(index);
     }
 
-    public void updateProduct(int index,  int indexInBasket) throws IndexOutOfBoundsException {
+    public void updateProduct(int index,  int indexInBasket) throws Exception {
         basket.updateProduct(index, indexInBasket);
 
     }
 
-    public void addProduct(int indexInBasket) {
+    public void addProduct(int indexInBasket) throws Exception {
         basket.addProduct(indexInBasket);
     }
 
-    public void deleteProduct(int index) throws IndexOutOfBoundsException {
+    public void deleteProduct(int index) throws Exception {
         basket.deleteProduct(index);
     }
 

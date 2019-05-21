@@ -39,22 +39,22 @@ public class InMemoryBasketDao implements BasketDao {
     }
 
     @Override
-    public Product getProduct(int index) throws IndexOutOfBoundsException {
+    public Product getProduct(int index) throws Exception {
         return basket.get(index);
     }
 
     @Override
-    public void updateProduct(int index, int indexInBasket) {
+    public void updateProduct(int index, int indexInBasket) throws Exception {
         basket.set(index, listOfProducts.getProduct(indexInBasket));
     }
 
     @Override
-    public void addProduct(int indexInBasket) {
+    public void addProduct(int indexInBasket) throws Exception {
         basket.add(listOfProducts.getProduct(indexInBasket));
     }
 
     @Override
-    public void deleteProduct(int index) {
+    public void deleteProduct(int index) throws Exception {
         basket.remove(index);
     }
 }

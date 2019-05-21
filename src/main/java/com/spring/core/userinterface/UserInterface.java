@@ -1,6 +1,10 @@
 package com.spring.core.userinterface;
 
+import com.spring.core.console_input.ConsoleInputValidator;
+import com.spring.core.service.BasketService;
 import com.spring.core.userinterface.impl.UserMenuChoice;
+
+import java.io.PrintStream;
 
 /**
  * Use this interface if you want to create a new way to interaction with users
@@ -29,7 +33,7 @@ public interface UserInterface {
      *
      * @param userChoice
      */
-    void runChoice(UserMenuChoice userChoice);
+    void runChoice(UserMenuChoice userChoice)  throws Exception;
 
     /**
      * This method prints all products
@@ -44,20 +48,30 @@ public interface UserInterface {
     /**
      * This method prints only one product you chose
      */
-    void printProduct();
+    void printProduct() throws Exception;
 
     /**
      * This method provides you ability to add product
      */
-    void addProduct();
+    void addProduct() throws Exception;
 
     /**
      * This method provides you ability to update product
      */
-    void updateProduct();
+    void updateProduct() throws Exception;
 
     /**
      * This method deletes product you chose
      */
-    void deleteProduct();
+    void deleteProduct() throws Exception;
+
+    /**
+     * This method is used for test
+     * @return BasketService is object which provides methods to manage products basket
+     */
+    BasketService getBasketService();
+
+    ConsoleInputValidator getConsoleInputValidator();
+
+    PrintStream getPrintStream();
 }

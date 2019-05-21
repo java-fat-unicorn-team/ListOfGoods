@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,7 +29,7 @@ public class BasketServiceTest {
     private static List<Product> list;
 
     @BeforeClass
-    public static void initialProductService() {
+    public static void initialProductService() throws Exception {
         list = new ArrayList<>() {{
             add(new Product("phone", 790, 340));
             add(new Product("pan", 9, 15));
@@ -59,24 +60,42 @@ public class BasketServiceTest {
 
     @Test
     public void testGetProduct() {
-        assertEquals(list.get(1), basketService.getProduct(1));
+        try {
+            assertEquals(list.get(1), basketService.getProduct(1));
+        } catch (Exception e) {
+            fail("test get product is failed");
+        }
     }
 
     @Test
     public void testUpdateProduct() {
-        basketService.updateProduct(2, 1);
-        assertEquals(list.get(1), basketService.getProduct(2));
+        try {
+            basketService.updateProduct(2, 1);
+            assertEquals(list.get(1), basketService.getProduct(2));
+        } catch (Exception e) {
+            fail("test update product is failed");
+        }
+    }
+
+    @Test(expected = Exception.class)
+    public void testUpdateNonexistentProduct() throws Exception {
+        basketService.updateProduct(9, 1);
     }
 
     @Test
     public void testAddProduct() {
-        basketService.addProduct(2);
-        assertEquals(list.get(2), basketService.getProduct(3));
+        try {
+            basketService.addProduct(2);
+            assertEquals(list.get(2), basketService.getProduct(basketService.getProductsFromBasket().size()-1));
+        } catch (Exception e) {
+            fail("test add product is failed");
+        }
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testDeleteProduct() {
-        basketService.deleteProduct(3);
-        basketService.getProduct(3);
+    @Test(expected = Exception.class)
+    public void testDeleteProduct() throws Exception {
+        int size = basketService.getProductsFromBasket().size()-1;
+        basketService.deleteProduct(size);
+        basketService.getProduct(size);
     }
 }

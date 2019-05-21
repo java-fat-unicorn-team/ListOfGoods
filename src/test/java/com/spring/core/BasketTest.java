@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,7 +27,7 @@ public class BasketTest {
     private static List<Product> list;
 
     @BeforeClass
-    public static void initialBasket() {
+    public static void initialBasket() throws Exception {
         list = new ArrayList<Product>() {{
             add(new Product("phone", 790, 340));
             add(new Product("pan", 9, 15));
@@ -55,23 +56,40 @@ public class BasketTest {
 
     @Test
     public void testGetProduct() {
-        assertEquals(list.get(1), basket.getProduct(1));
+        try {
+            assertEquals(list.get(1), basket.getProduct(1));
+        } catch (Exception e) {
+            fail("test get product is failed");
+        }
     }
 
     @Test
     public void testUpdateProduct() {
-        basket.updateProduct(2, 1);
-        assertEquals(list.get(1), basket.getProduct(2));
+        try {
+            basket.updateProduct(2, 1);
+            assertEquals(list.get(1), basket.getProduct(2));
+        } catch (Exception e) {
+            fail("test update product is failed");
+        }
+    }
+
+    @Test(expected = Exception.class)
+    public void testUpdateNonexistentProduct() throws Exception {
+        basket.updateProduct(9, 1);
     }
 
     @Test
     public void testAddProduct() {
-        basket.addProduct(2);
-        assertEquals(list.get(2), basket.getProduct(3));
+        try {
+            basket.addProduct(2);
+            assertEquals(list.get(2), basket.getProduct(3));
+        } catch (Exception e) {
+            fail("test add product is failed");
+        }
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testDeleteProduct() {
+    @Test(expected = Exception.class)
+    public void testDeleteProduct() throws Exception {
         basket.deleteProduct(3);
         basket.getProduct(3);
     }

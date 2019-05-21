@@ -23,21 +23,21 @@ public interface BasketDao {
      * @param index is index of product to be obtained
      * @return Product value is obtained product
      */
-    Product getProduct(int index);
+    Product getProduct(int index)  throws Exception;
 
     /**
      * @param index         is index of product from basket to be updated
      * @param indexInBasket is index of product to be added
      */
-    void updateProduct(int index, int indexInBasket);
+    void updateProduct(int index, int indexInBasket) throws Exception;
 
     /**
      * @param indexInBasket is index of product to be added
      */
-    void addProduct(int indexInBasket);
+    void addProduct(int indexInBasket) throws Exception;
 
     /**
      * @param index product's index from basket to be deleted
      */
-    void deleteProduct(int index);
+    void deleteProduct(int index) throws Exception;
 }

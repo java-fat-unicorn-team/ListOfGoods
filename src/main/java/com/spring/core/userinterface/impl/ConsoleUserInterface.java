@@ -11,6 +11,7 @@ import java.io.PrintStream;
 
 /**
  * Class using for interaction with users through the console
+ *
  * @author Katuranau Maksimilyan
  * {@see UserInterface}
  */
@@ -21,7 +22,7 @@ public class ConsoleUserInterface implements UserInterface {
     private PrintStream outputStream;
     private boolean isClose;
 
-    private BasketService productService;
+    private BasketService basketService;
 
     /**
      * @param basketService is class which provides methods to manage basket
@@ -30,7 +31,7 @@ public class ConsoleUserInterface implements UserInterface {
      */
     @Autowired
     public ConsoleUserInterface(BasketService basketService, PrintStream outputStream, ConsoleInputValidator inputStream) {
-        this.productService = basketService;
+        this.basketService = basketService;
         this.outputStream = outputStream;
         this.inputStream = inputStream;
         this.isClose = false;
@@ -43,20 +44,24 @@ public class ConsoleUserInterface implements UserInterface {
             showMenu();
             userChoice = getChoice();
             outputStream.println("***");
-            runChoice(userChoice);
+            try {
+                runChoice(userChoice);
+            } catch (Exception e) {
+                outputStream.println("You entered wrong index...");
+            }
         }
     }
 
     @Override
     public void printProductsFromBasket() {
-        for (Product product : productService.getProductsFromBasket()) {
+        for (Product product : basketService.getProductsFromBasket()) {
             outputStream.println(product.toString());
         }
     }
 
     @Override
     public void printAllProducts() {
-        for (Product product : productService.getAllProducts()) {
+        for (Product product : basketService.getAllProducts()) {
             outputStream.println(product.toString());
         }
     }
@@ -73,12 +78,11 @@ public class ConsoleUserInterface implements UserInterface {
 
     @Override
     public UserMenuChoice getChoice() {
-        UserMenuChoice choice = UserMenuChoice.get(inputStream.next());
-        return choice;
+        return UserMenuChoice.get(inputStream.next());
     }
 
     @Override
-    public void runChoice(UserMenuChoice userChoice) {
+    public void runChoice(UserMenuChoice userChoice) throws Exception {
         switch (userChoice) {
             case PRINT_ALL:
                 printAllProducts();
@@ -107,44 +111,42 @@ public class ConsoleUserInterface implements UserInterface {
     }
 
     @Override
-    public void printProduct() {
+    public void printProduct() throws Exception {
         outputStream.println("Enter product's index to be printed");
-        try {
-            outputStream.println(productService.getProduct(inputStream.nextInt()));
-        } catch (Exception e) {
-            outputStream.println("You entered wrong index...");
-        }
+        outputStream.println(basketService.getProduct(inputStream.nextInt()));
     }
 
     @Override
-    public void deleteProduct() {
+    public void deleteProduct() throws Exception {
         outputStream.println("Enter product's index to be deleted from basket");
-        try {
-            productService.deleteProduct(inputStream.nextInt());
-        } catch (Exception e) {
-            outputStream.println("You entered wrong index...");
-        }
+        basketService.deleteProduct(inputStream.nextInt());
     }
 
     @Override
-    public void addProduct() {
+    public void addProduct() throws Exception {
         outputStream.print("Enter product's index to be added to basket: ");
-        try {
-            productService.addProduct(inputStream.nextInt());
-        } catch (Exception e) {
-            outputStream.println("You entered wrong index...");
-        }
+        basketService.addProduct(inputStream.nextInt());
     }
 
     @Override
-    public void updateProduct() {
-        try {
-            outputStream.print("Enter product's index to be updated: ");
-            int index = inputStream.nextInt();
-            outputStream.print("Enter new product's index which will update old product: ");
-            productService.updateProduct(index, inputStream.nextInt());
-        } catch (Exception e) {
-            outputStream.println("You entered wrong index...");
-        }
+    public void updateProduct() throws Exception {
+        outputStream.print("Enter product's index to be updated: ");
+        int index = inputStream.nextInt();
+        outputStream.print("Enter new product's index which will update old product: ");
+        basketService.updateProduct(index, inputStream.nextInt());
+    }
+
+    public BasketService getBasketService() {
+        return basketService;
+    }
+
+    @Override
+    public ConsoleInputValidator getConsoleInputValidator() {
+        return inputStream;
+    }
+
+    @Override
+    public PrintStream getPrintStream() {
+        return outputStream;
     }
 }

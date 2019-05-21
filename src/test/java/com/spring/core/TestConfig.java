@@ -1,9 +1,10 @@
-package com.spring.core.config;
+package com.spring.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.core.config.DataInitializer;
 import com.spring.core.console_input.ConsoleInputValidator;
-import com.spring.core.dao.BasketDao;
 import com.spring.core.model.ListOfGoods;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,12 +14,11 @@ import org.springframework.context.annotation.PropertySource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 @ComponentScan("com.spring.core")
 @Configuration
 @PropertySource("classpath:application.properties")
-public class AppConfig {
+public class TestConfig {
 
     @Bean
     public ObjectMapper getObjectMapper() {
@@ -33,7 +33,7 @@ public class AppConfig {
 
     @Bean
     public PrintStream getPrintStream() {
-        return new PrintStream(System.out);
+        return Mockito.mock(PrintStream.class);
     }
 
     @Bean
@@ -42,7 +42,7 @@ public class AppConfig {
     }
 
     @Bean
-    public ConsoleInputValidator getConsoleInputValidator(InputStream inputStream) {
-        return new  ConsoleInputValidator(inputStream);
+    public ConsoleInputValidator getConsoleInputValidator() {
+        return Mockito.mock(ConsoleInputValidator.class);
     }
 }

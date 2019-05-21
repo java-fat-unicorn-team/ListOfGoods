@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * This class gets list of products and provides methods to get them from it
+ *
  * @author Katuranau Maksimilyan
  */
 @Component
@@ -37,7 +38,7 @@ public class InMemoryListOfGoodsDao implements ListOfGoodsDao {
      * @return Product is a product with an index that was provided
      */
     @Override
-    public Product getProduct(int index) {
+    public Product getProduct(int index) throws Exception {
         return listOfGoods.getListOfGoods().get(index);
     }
 }

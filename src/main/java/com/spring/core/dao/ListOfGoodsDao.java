@@ -11,5 +11,5 @@ import java.util.List;
 public interface ListOfGoodsDao {
     List<Product> getProducts();
 
-    Product getProduct(int index);
+    Product getProduct(int index) throws Exception;
 }

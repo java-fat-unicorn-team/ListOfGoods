@@ -16,6 +16,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -38,7 +39,7 @@ public class UserInterfaceTest {
     }
 
     @Test
-    public void testPrintProductsFromBasket() {
+    public void testPrintProductsFromBasket() throws Exception {
         when(inputStream.nextInt()).thenReturn(5, 1, 3);
         userInterface.addProduct();
         userInterface.addProduct();
@@ -55,32 +56,75 @@ public class UserInterfaceTest {
 
     @Test
     public void testAddProduct() {
-        when(inputStream.nextInt()).thenReturn(5, 1, 3);
-        userInterface.addProduct();
-        userInterface.addProduct();
-        userInterface.addProduct();
-        verify(inputStream, times(3)).nextInt();
+        try {
+            when(inputStream.nextInt()).thenReturn(0, 4, 2);
+            userInterface.addProduct();
+            userInterface.addProduct();
+            userInterface.addProduct();
+            verify(inputStream, times(3)).nextInt();
+        } catch (Exception e) {
+            fail("test add product is failed");
+        }
     }
 
     @Test
     public void testDeleteProduct() {
-        when(inputStream.nextInt()).thenReturn(1);
+        try {
+            when(inputStream.nextInt()).thenReturn(6, 0);
+            userInterface.addProduct();
+            userInterface.deleteProduct();
+            verify(inputStream, times(2)).nextInt();
+        } catch (Exception e) {
+            fail("test delete product is failed");
+        }
+    }
+
+    @Test(expected = Exception.class)
+    public void testDeleteNonexistentProduct() throws Exception {
+        when(inputStream.nextInt()).thenReturn(6, 9);
+        userInterface.addProduct();
         userInterface.deleteProduct();
-        verify(inputStream, times(1)).nextInt();
+        verify(inputStream, times(2)).nextInt();
     }
 
     @Test
     public void testPrintProduct() {
-        when(inputStream.nextInt()).thenReturn(3);
+        try{
+        when(inputStream.nextInt()).thenReturn(3, 0);
+        userInterface.addProduct();
         userInterface.printProduct();
-        verify(inputStream, times(1)).nextInt();
+        verify(inputStream, times(2)).nextInt();
+        } catch (Exception e) {
+            fail("test print product is failed");
+        }
+    }
+
+    @Test(expected = Exception.class)
+    public void testPrintNonexistentProduct() throws Exception {
+        when(inputStream.nextInt()).thenReturn(3, 3);
+        userInterface.addProduct();
+        userInterface.printProduct();
+        verify(inputStream, times(2)).nextInt();
     }
 
     @Test
     public void testUpdateProduct() {
-        when(inputStream.nextInt()).thenReturn(3, 7);
+        try{
+        when(inputStream.nextInt()).thenReturn(5, 0, 7);
+        userInterface.addProduct();
         userInterface.updateProduct();
-        verify(inputStream, times(2)).nextInt();
+        verify(inputStream, times(3)).nextInt();
+        } catch (Exception e) {
+            fail("test update product is failed");
+        }
+    }
+
+    @Test(expected = Exception.class)
+    public void testUpdateNonexistentProduct() throws Exception {
+        when(inputStream.nextInt()).thenReturn(5, 3, 7);
+        userInterface.addProduct();
+        userInterface.updateProduct();
+        verify(inputStream, times(3)).nextInt();
     }
 
     @Test
@@ -95,5 +139,4 @@ public class UserInterfaceTest {
         userInterface.showMenu();
         verify(outputStream, times(8)).println(anyString());
     }
-
 }

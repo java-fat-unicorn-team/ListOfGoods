@@ -2,7 +2,6 @@
 /home/maksim/IdeaProjects/ListOfGoods/src/main/java/com/spring/core/dao/impl/InMemoryBasketDao.java
 /home/maksim/IdeaProjects/ListOfGoods/src/main/java/com/spring/core/App.java
 /home/maksim/IdeaProjects/ListOfGoods/src/main/java/com/spring/core/service/BasketService.java
-/home/maksim/IdeaProjects/ListOfGoods/src/main/java/main.java
 /home/maksim/IdeaProjects/ListOfGoods/src/main/java/com/spring/core/userinterface/impl/ConsoleUserInterface.java
 /home/maksim/IdeaProjects/ListOfGoods/src/main/java/com/spring/core/service/impl/BasketServiceImpl.java
 /home/maksim/IdeaProjects/ListOfGoods/src/main/java/com/spring/core/config/DataInitializer.java

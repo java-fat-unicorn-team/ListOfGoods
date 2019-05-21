@@ -2,7 +2,6 @@ com/spring/core/userinterface/impl/ConsoleUserInterface.class
 com/spring/core/userinterface/impl/UserMenuChoice.class
 com/spring/core/dao/impl/InMemoryBasketDao.class
 com/spring/core/userinterface/UserInterface.class
-main.class
 com/spring/core/userinterface/impl/ConsoleUserInterface$1.class
 com/spring/core/console_input/ConsoleInputValidator.class
 com/spring/core/service/impl/BasketServiceImpl.class

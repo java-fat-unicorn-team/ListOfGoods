@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserInterfaceTest {
+public class UstUserInterfaceTest {
 
     private ApplicationContext context;
     private ConsoleUserInterface userInterface;

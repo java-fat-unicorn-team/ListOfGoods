@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Product {
     private String name;
     private BigDecimal price;
-    private double weight;
+    private int weight;
 
     public Product() {
     }
@@ -28,7 +28,7 @@ public class Product {
      * @param price is product's price
      * @param weight is product's weight
      */
-    public Product(String name, BigDecimal price, double weight) {
+    public Product(String name, BigDecimal price, int weight) {
         this.name = name;
         this.price = price;
         this.weight = weight;
@@ -50,11 +50,11 @@ public class Product {
         this.price = price;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
@@ -65,7 +65,7 @@ public class Product {
      */
     @Override
     public String toString() {
-        return name + ": " + price + "$, " + weight + "kg.";
+        return name + ": " + price + "$, " + weight + "g.";
     }
 
     @Override

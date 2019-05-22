@@ -26,9 +26,9 @@ public class ListOfGoodsTest {
     @BeforeClass
     public static void initialListOfGoods() {
         myList = new ArrayList<>() {{
-            add(new Product("phone", new BigDecimal(790.22), 0.4));
-            add(new Product("pan", new BigDecimal(9.12), 0.03));
-            add(new Product("computer", new BigDecimal(3200.00), 2.3));
+            add(new Product("phone", new BigDecimal(790.22), 340));
+            add(new Product("pan", new BigDecimal(9.12), 15));
+            add(new Product("computer", new BigDecimal(3200.00), 2100));
         }};
         list = Mockito.mock(ListOfGoods.class);
         listOfGoods = new InMemoryListOfGoodsDao(list);

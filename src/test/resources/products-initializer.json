@@ -11,9 +11,9 @@
       "weight": 400
     },
     {
-      "name": "pan",
-      "price": 10.09,
-      "weight": 30
+      "name": "computer",
+      "price": 2100.09,
+      "weight": 5300
     },
     {
       "name": "phone",
@@ -31,11 +31,6 @@
       "weight": 30
     },
     {
-      "name": "bottle",
-      "price": 5.05,
-      "weight": 500
-    },
-    {
       "name": "laptop",
       "price": 1500.45,
       "weight": 700
@@ -46,9 +41,14 @@
       "weight": 150
     },
     {
-      "name": "coat",
-      "price": 2000.30,
-      "weight": 2300
+      "name": "earphone",
+      "price": 50.20,
+      "weight": 115
+    },
+    {
+      "name": "boat",
+      "price": 3000.30,
+      "weight": 12300
     }
   ]
 }

@@ -27,7 +27,7 @@ public class UserInterfaceTestIT {
     private static ConsoleInputValidator inputStream;
 
     @BeforeClass
-    public static void initialContest() {
+    public static void initialContext() {
         context = new AnnotationConfigApplicationContext(TestConfig.class);
         userInterface = context.getBean(UserInterface.class);
         basketService = userInterface.getBasketService();

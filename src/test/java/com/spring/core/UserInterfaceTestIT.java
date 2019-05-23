@@ -17,7 +17,6 @@ import java.io.PrintStream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 public class UserInterfaceTestIT {
     private static ApplicationContext context;
@@ -44,12 +43,12 @@ public class UserInterfaceTestIT {
     @Test
     public void testPrintProductsFromBasket() {
         try {
-            when(inputStream.nextInt()).thenReturn(3, 7);
+            Mockito.when(inputStream.nextInt()).thenReturn(3, 7);
             userInterface.addProduct();
             userInterface.addProduct();
             int size = basketService.getProductsFromBasket().size();
             userInterface.printProductsFromBasket();
-            verify(outputStream, times(size)).println(anyString());
+            Mockito.verify(outputStream, Mockito.times(size+2)).println(anyString());
         } catch (Exception e) {
             fail("test print products from basket failed");
         }
@@ -60,12 +59,13 @@ public class UserInterfaceTestIT {
         outputStream.flush();
         int size = basketService.getAllProducts().size();
         userInterface.printAllProducts();
-        verify(outputStream, times(size)).println(anyString());
+        Mockito.verify(outputStream, Mockito.times(size)).println(anyString());
     }
 
     @Test(expected = Exception.class)
-    public void testPrintProduct() throws Exception {
-        when(inputStream.nextInt()).thenReturn(15);
+    public void testPrintNonexistentProduct() throws Exception {
+        int size = basketService.getProductsFromBasket().size();
+        Mockito.when(inputStream.nextInt()).thenReturn(size);
         userInterface.printProduct();
     }
 
@@ -73,7 +73,7 @@ public class UserInterfaceTestIT {
     public void testAddProduct() {
         try {
             int sizeBefore = basketService.getProductsFromBasket().size();
-            when(inputStream.nextInt()).thenReturn(3, 7);
+            Mockito.when(inputStream.nextInt()).thenReturn(3, 7);
             userInterface.addProduct();
             userInterface.addProduct();
             int sizeAfter = basketService.getProductsFromBasket().size();
@@ -85,14 +85,15 @@ public class UserInterfaceTestIT {
 
     @Test(expected = Exception.class)
     public void testDeleteNonexistentProduct() throws Exception {
-        when(inputStream.nextInt()).thenReturn(15);
+        int size = basketService.getProductsFromBasket().size();
+        Mockito.when(inputStream.nextInt()).thenReturn(size);
         userInterface.deleteProduct();
     }
 
     @Test
     public void testDeleteProduct() {
         try {
-            when(inputStream.nextInt()).thenReturn(5, 0);
+            Mockito.when(inputStream.nextInt()).thenReturn(5, 0);
             userInterface.addProduct();
             int sizeBefore = basketService.getProductsFromBasket().size();
             userInterface.deleteProduct();
@@ -106,7 +107,7 @@ public class UserInterfaceTestIT {
     @Test
     public void testUpdateProduct() {
         try {
-            when(inputStream.nextInt()).thenReturn(5, 3, 1, 7);
+            Mockito.when(inputStream.nextInt()).thenReturn(5, 3, 1, 7);
             userInterface.addProduct();
             userInterface.addProduct();
             userInterface.updateProduct();
@@ -118,7 +119,7 @@ public class UserInterfaceTestIT {
 
     @Test
     public void testGetChoice() {
-        when(inputStream.next()).thenReturn("3");
+        Mockito.when(inputStream.next()).thenReturn("3");
         assertEquals(UserMenuChoice.PRINT, userInterface.getChoice());
     }
 }

@@ -124,7 +124,7 @@ public class ConsoleUserInterface implements UserInterface {
 
     @Override
     public void addProduct() throws Exception {
-        outputStream.print("Enter product's index to be added to basket: ");
+        outputStream.println("Enter product's index to be added to basket: ");
         basketService.addProduct(inputStream.nextInt());
     }
 

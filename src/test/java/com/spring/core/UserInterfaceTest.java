@@ -1,41 +1,45 @@
 package com.spring.core;
 
-import com.spring.core.config.AppConfig;
+import com.spring.core.config.TestConfig;
 import com.spring.core.console_input.ConsoleInputValidator;
 import com.spring.core.service.BasketService;
+import com.spring.core.userinterface.UserInterface;
 import com.spring.core.userinterface.impl.ConsoleUserInterface;
 import com.spring.core.userinterface.impl.UserMenuChoice;
-import org.junit.Before;
+import org.junit.After;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class UserInterfaceTest {
+    private static ApplicationContext context;
+    private static UserInterface userInterface;
+    private static BasketService basketService;
+    private static PrintStream outputStream;
+    private static ConsoleInputValidator inputStream;
 
-    private ApplicationContext context;
-    private ConsoleUserInterface userInterface;
-    private BasketService basketService;
-    private PrintStream outputStream;
-    private ConsoleInputValidator inputStream;
-
-    @Before
-    public void initialContext() {
-        context = new AnnotationConfigApplicationContext(AppConfig.class);
+    @BeforeClass
+    public static void initialContext() {
+        context = new AnnotationConfigApplicationContext(TestConfig.class);
         basketService = context.getBean(BasketService.class);
         outputStream = Mockito.mock(PrintStream.class);
         inputStream = Mockito.mock(ConsoleInputValidator.class);
         userInterface = new ConsoleUserInterface(basketService, outputStream, inputStream);
+    }
+
+    @After
+    public void resetMocks() {
+        Mockito.reset(outputStream);
+        Mockito.reset(inputStream);
     }
 
     @Test
@@ -44,8 +48,9 @@ public class UserInterfaceTest {
         userInterface.addProduct();
         userInterface.addProduct();
         userInterface.addProduct();
+        int size = basketService.getProductsFromBasket().size();
         userInterface.printProductsFromBasket();
-        verify(outputStream, times(3)).println(anyString());
+        verify(outputStream, times(size+3)).println(anyString());
     }
 
     @Test
@@ -81,19 +86,19 @@ public class UserInterfaceTest {
 
     @Test(expected = Exception.class)
     public void testDeleteNonexistentProduct() throws Exception {
-        when(inputStream.nextInt()).thenReturn(6, 9);
+        int size = basketService.getProductsFromBasket().size();
+        when(inputStream.nextInt()).thenReturn(6, size + 1);
         userInterface.addProduct();
         userInterface.deleteProduct();
-        verify(inputStream, times(2)).nextInt();
     }
 
     @Test
     public void testPrintProduct() {
-        try{
-        when(inputStream.nextInt()).thenReturn(3, 0);
-        userInterface.addProduct();
-        userInterface.printProduct();
-        verify(inputStream, times(2)).nextInt();
+        try {
+            when(inputStream.nextInt()).thenReturn(3, 0);
+            userInterface.addProduct();
+            userInterface.printProduct();
+            verify(inputStream, times(2)).nextInt();
         } catch (Exception e) {
             fail("test print product is failed");
         }
@@ -101,19 +106,19 @@ public class UserInterfaceTest {
 
     @Test(expected = Exception.class)
     public void testPrintNonexistentProduct() throws Exception {
-        when(inputStream.nextInt()).thenReturn(3, 3);
+        int size = basketService.getProductsFromBasket().size();
+        when(inputStream.nextInt()).thenReturn(3, size + 1);
         userInterface.addProduct();
         userInterface.printProduct();
-        verify(inputStream, times(2)).nextInt();
     }
 
     @Test
     public void testUpdateProduct() {
-        try{
-        when(inputStream.nextInt()).thenReturn(5, 0, 7);
-        userInterface.addProduct();
-        userInterface.updateProduct();
-        verify(inputStream, times(3)).nextInt();
+        try {
+            when(inputStream.nextInt()).thenReturn(5, 0, 7);
+            userInterface.addProduct();
+            userInterface.updateProduct();
+            verify(inputStream, times(3)).nextInt();
         } catch (Exception e) {
             fail("test update product is failed");
         }
@@ -121,10 +126,10 @@ public class UserInterfaceTest {
 
     @Test(expected = Exception.class)
     public void testUpdateNonexistentProduct() throws Exception {
-        when(inputStream.nextInt()).thenReturn(5, 3, 7);
+        int size = basketService.getProductsFromBasket().size();
+        when(inputStream.nextInt()).thenReturn(5, size + 1, 7);
         userInterface.addProduct();
         userInterface.updateProduct();
-        verify(inputStream, times(3)).nextInt();
     }
 
     @Test

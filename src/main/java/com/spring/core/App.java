@@ -23,6 +23,8 @@ public class App {
     public static void main(String[] args) {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
+//        System.out.println("Profiles:");
+//        System.out.println(context.getEnvironment().getActiveProfiles().toString());
 
         UserInterface userInterface = context.getBean(UserInterface.class);
         userInterface.start();

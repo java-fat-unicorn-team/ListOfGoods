@@ -1,0 +1,19 @@
+{
+  "basket": [
+    {
+      "name": "phone",
+      "price": 790.22,
+      "weight": 340
+    },
+    {
+      "name": "pan",
+      "price": 9.11,
+      "weight": 15
+    },
+    {
+      "name": "computer",
+      "price": 3300.33,
+      "weight": 2200
+    }
+  ]
+}

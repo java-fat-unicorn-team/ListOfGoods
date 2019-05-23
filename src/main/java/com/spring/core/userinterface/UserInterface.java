@@ -71,7 +71,15 @@ public interface UserInterface {
      */
     BasketService getBasketService();
 
+    /**
+     * This method is used for test
+     * @return ConsoleInputValidator is object which provides methods to get input data
+     */
     ConsoleInputValidator getConsoleInputValidator();
 
+    /**
+     * This method is used for test
+     * @return PrintStream is object which provides methods to print data
+     */
     PrintStream getPrintStream();
 }

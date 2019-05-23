@@ -14,14 +14,14 @@ import java.util.List;
  * @author Katuranau Maksimilyan
  */
 @Component
-public class InMemoryListOfGoodsDao implements ListOfGoodsDao {
+public class ListOfGoodsDaoImpl implements ListOfGoodsDao {
     ListOfGoods listOfGoods;
 
     /**
      * @param listOfGoods is class which contain list of products
      */
     @Autowired
-    public InMemoryListOfGoodsDao(ListOfGoods listOfGoods) {
+    public ListOfGoodsDaoImpl(ListOfGoods listOfGoods) {
         this.listOfGoods = listOfGoods;
     }
 

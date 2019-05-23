@@ -1,7 +1,7 @@
 # Settings of intellij idea
 .idea/
 log/
-.iml
+*.iml
 # Compiled class file
 *.class
 

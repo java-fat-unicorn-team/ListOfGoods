@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * This class provides all the functionality
- * Then it is used to make user interface
- * This class manages data is received from memory
+ * This class provides methods to manage basket
  * @author Katuranau Maksimilyan
  * {@see InMemoryBasketDao}
  */
@@ -21,7 +19,7 @@ public class BasketServiceImpl implements BasketService {
     private final BasketDao basket;
 
     /**
-     * @param basket is an object provides all the functionality of the basket
+     * @param basket is an object provides methods to manage basket
      */
     @Autowired
     public BasketServiceImpl(BasketDao basket) {

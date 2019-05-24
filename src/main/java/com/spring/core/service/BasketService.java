@@ -5,7 +5,7 @@ import com.spring.core.model.Product;
 import java.util.List;
 
 /**
- * Use this interface if you want to create a new service
+ * This interface provides methods to manage basket
  * @author Katuranau Maksimilyan
  */
 public interface BasketService {

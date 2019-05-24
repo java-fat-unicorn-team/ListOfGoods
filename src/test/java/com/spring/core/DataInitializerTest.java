@@ -5,16 +5,18 @@ import com.spring.core.config.DataInitializer;
 import com.spring.core.model.ListOfGoods;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class DataInitializerTest {
-    private String INITIALIZE_PRODUCTS_FILENAME = "classpath:products-initializer.json";
+    private String PRODUCTS_FILENAME = "classpath:products-initializer.json";
     DataInitializer dataInitializer;
     ListOfGoods listOfGoods;
     ListOfGoods listOfGoodsTest;
@@ -22,9 +24,11 @@ public class DataInitializerTest {
     @Before
     public void initialDataInitializer() {
         dataInitializer = new DataInitializer(new ObjectMapper());
-        dataInitializer.setINITIALIZE_PRODUCTS_FILENAME("classpath:products-initializer.json");
+        Field field = ReflectionUtils.findField(DataInitializer.class, "INITIALIZE_PRODUCTS_FILENAME");
+        ReflectionUtils.makeAccessible(field);
+        ReflectionUtils.setField(field, dataInitializer, PRODUCTS_FILENAME);
         try {
-            File productsInitializeFile = ResourceUtils.getFile(INITIALIZE_PRODUCTS_FILENAME);
+            File productsInitializeFile = ResourceUtils.getFile(PRODUCTS_FILENAME);
             listOfGoods = new ObjectMapper().readValue(productsInitializeFile, ListOfGoods.class);
         } catch (IOException e) {
             e.printStackTrace();

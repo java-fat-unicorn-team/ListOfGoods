@@ -43,8 +43,4 @@ public class DataInitializer {
 
         return objectMapper.readValue(productsInitializeFile, ListOfGoods.class);
     }
-
-    public void setINITIALIZE_PRODUCTS_FILENAME(String INITIALIZE_PRODUCTS_FILENAME) {
-        this.INITIALIZE_PRODUCTS_FILENAME = INITIALIZE_PRODUCTS_FILENAME;
-    }
 }

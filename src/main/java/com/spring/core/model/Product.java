@@ -1,8 +1,5 @@
 package com.spring.core.model;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -11,9 +8,6 @@ import java.util.Objects;
  *
  * @author Katuranau Maksimilyan
  */
-
-@Component
-@Scope("prototype")
 public class Product {
     private String name;
     private BigDecimal price;
@@ -23,9 +17,8 @@ public class Product {
     }
 
     /**
-     *
-     * @param name is product's name
-     * @param price is product's price
+     * @param name   is product's name
+     * @param price  is product's price
      * @param weight is product's weight
      */
     public Product(String name, BigDecimal price, int weight) {

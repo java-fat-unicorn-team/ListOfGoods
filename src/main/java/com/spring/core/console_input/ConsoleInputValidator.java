@@ -31,15 +31,4 @@ public class ConsoleInputValidator {
     public int nextInt() {
         return scanner.nextInt();
     }
-
-    public boolean hasNext() {
-        return scanner.hasNextLine();
-    }
-
-    public boolean hasNextInt() {
-        return scanner.hasNextInt();
-    }
-    public void clear(){
-
-    }
 }

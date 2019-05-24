@@ -4,20 +4,21 @@ import com.spring.core.dao.BasketDao;
 import com.spring.core.dao.ListOfGoodsDao;
 import com.spring.core.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class provides methods to manage products basket
- * products are stored in memory
+ * products are stored in memory *
  * @author Katuranau Maksimilyan
  * {@see BasketDao}
  */
-@Component
+@Repository
+@Profile("dev")
 public class InMemoryBasketDao implements BasketDao {
-
     private final List<Product> basket;
     private final ListOfGoodsDao listOfProducts;
 

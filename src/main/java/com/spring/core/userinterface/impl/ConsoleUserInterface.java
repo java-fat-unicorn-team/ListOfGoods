@@ -113,7 +113,7 @@ public class ConsoleUserInterface implements UserInterface {
     @Override
     public void printProduct() throws Exception {
         outputStream.println("Enter product's index to be printed");
-        outputStream.println(basketService.getProduct(inputStream.nextInt()));
+        outputStream.println(basketService.getProduct(inputStream.nextInt()).toString());
     }
 
     @Override
@@ -124,29 +124,15 @@ public class ConsoleUserInterface implements UserInterface {
 
     @Override
     public void addProduct() throws Exception {
-        outputStream.print("Enter product's index to be added to basket: ");
+        outputStream.println("Enter product's index to be added to basket: ");
         basketService.addProduct(inputStream.nextInt());
     }
 
     @Override
     public void updateProduct() throws Exception {
-        outputStream.print("Enter product's index to be updated: ");
+        outputStream.println("Enter product's index to be updated: ");
         int index = inputStream.nextInt();
-        outputStream.print("Enter new product's index which will update old product: ");
+        outputStream.println("Enter new product's index which will update old product: ");
         basketService.updateProduct(index, inputStream.nextInt());
-    }
-
-    public BasketService getBasketService() {
-        return basketService;
-    }
-
-    @Override
-    public ConsoleInputValidator getConsoleInputValidator() {
-        return inputStream;
-    }
-
-    @Override
-    public PrintStream getPrintStream() {
-        return outputStream;
     }
 }

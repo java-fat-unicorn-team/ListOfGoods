@@ -1,14 +1,14 @@
 package com.spring.core;
 
 import com.spring.core.dao.BasketDao;
-import com.spring.core.dao.ListOfGoodsDao;
-import com.spring.core.dao.impl.InMemoryBasketDao;
 import com.spring.core.model.Product;
-import com.spring.core.service.BasketService;
 import com.spring.core.service.impl.BasketServiceImpl;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -17,86 +17,89 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BasketServiceTest {
 
-    private static ListOfGoodsDao listOfGoods;
-    private static BasketDao basket;
-    private static BasketService basketService;
+    @Mock
+    private BasketDao basket;
+    @InjectMocks
+    private BasketServiceImpl basketService;
 
-    private static List<Product> list;
+    private static List<Product> listOfProducts;
+    private static List<Product> testListOfProduct;
 
     @BeforeClass
-    public static void initialProductService() throws Exception {
-        list = new ArrayList<>() {{
+    public static void initialProductService() {
+        listOfProducts = new ArrayList<>() {{
             add(new Product("phone", new BigDecimal(790.22), 340));
             add(new Product("pan", new BigDecimal(9.12), 15));
             add(new Product("computer", new BigDecimal(3200.00), 2100));
         }};
+        testListOfProduct = new ArrayList<>() {{
+            add(new Product("phone", new BigDecimal(790.22), 340));
+            add(new Product("pan", new BigDecimal(9.12), 15));
+            add(new Product("computer", new BigDecimal(3200.00), 2100));
+        }};
+    }
 
-        listOfGoods = Mockito.mock(ListOfGoodsDao.class);
-        basket = new InMemoryBasketDao(listOfGoods);
-        basketService = new BasketServiceImpl(basket);
-        when(listOfGoods.getProducts()).thenReturn(list);
-        when(listOfGoods.getProduct(0)).thenReturn(list.get(0));
-        when(listOfGoods.getProduct(1)).thenReturn(list.get(1));
-        when(listOfGoods.getProduct(2)).thenReturn(list.get(2));
-        for (int i = 0; i < 3; i++) {
-            basketService.addProduct(i);
-        }
+    @After
+    public void resetMocks() {
+        Mockito.reset(basket);
     }
 
     @Test
     public void testGetProductsFromBasket() {
-        assertEquals(list, basketService.getProductsFromBasket());
+        when(basket.getProductsFromBasket()).thenReturn(testListOfProduct);
+        assertEquals(listOfProducts.get(0).getWeight(), basketService.getProductsFromBasket().get(0).getWeight());
+        assertEquals(listOfProducts.get(1).getPrice(), basketService.getProductsFromBasket().get(1).getPrice());
+        assertEquals(listOfProducts.get(2).getName(), basketService.getProductsFromBasket().get(2).getName());
     }
 
     @Test
     public void testGetAllProducts() {
-        assertEquals(list, basketService.getAllProducts());
+        when(basket.getAllProducts()).thenReturn(testListOfProduct);
+        assertEquals(listOfProducts.get(0).getWeight(), basketService.getAllProducts().get(0).getWeight());
+        assertEquals(listOfProducts.get(1).getPrice(), basketService.getAllProducts().get(1).getPrice());
+        assertEquals(listOfProducts.get(2).getName(), basketService.getAllProducts().get(2).getName());
     }
 
     @Test
-    public void testGetProduct() {
-        try {
-            assertEquals(list.get(1), basketService.getProduct(1));
-        } catch (Exception e) {
-            fail("test get product is failed");
-        }
-    }
-
-    @Test
-    public void testUpdateProduct() {
-        try {
-            basketService.updateProduct(2, 1);
-            assertEquals(list.get(1), basketService.getProduct(2));
-        } catch (Exception e) {
-            fail("test update product is failed");
-        }
+    public void testGetProduct() throws Exception {
+        when(basket.getProduct(1)).thenReturn(testListOfProduct.get(1));
+        assertEquals(listOfProducts.get(1).getPrice(), basketService.getProduct(1).getPrice());
+        assertEquals(listOfProducts.get(1).getWeight(), basketService.getProduct(1).getWeight());
     }
 
     @Test(expected = Exception.class)
-    public void testUpdateNonexistentProduct() throws Exception {
-        basketService.updateProduct(9, 1);
-    }
-
-    @Test
-    public void testAddProduct() {
-        try {
-            basketService.addProduct(2);
-            assertEquals(list.get(2), basketService.getProduct(basketService.getProductsFromBasket().size()-1));
-        } catch (Exception e) {
-            fail("test add product is failed");
-        }
+    public void testGetNonexistentProduct() throws Exception {
+        when(basket.getProduct(20)).thenThrow(Exception.class);
+        basketService.getProduct(20);
     }
 
     @Test(expected = Exception.class)
+    public void testGetProductFail() throws Exception {
+        when(basket.getProduct(-2)).thenThrow(Exception.class);
+        basketService.getProduct(-2);
+    }
+
+    @Test
+    public void testUpdateProduct() throws Exception {
+        basketService.updateProduct(2, 1);
+        verify(basket).updateProduct(2, 1);
+    }
+
+    @Test
+    public void testAddProduct() throws Exception {
+        basketService.addProduct(2);
+        verify(basket).addProduct(2);
+    }
+
+    @Test
     public void testDeleteProduct() throws Exception {
-        int size = basketService.getProductsFromBasket().size()-1;
-        basketService.deleteProduct(size);
-        basketService.getProduct(size);
+        basketService.deleteProduct(3);
+        verify(basket).deleteProduct(3);
     }
 }

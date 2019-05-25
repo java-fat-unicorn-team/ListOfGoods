@@ -4,24 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class contains list of products
+ * This class contains list of products.
  * This class is created by dataInitializer when project starts
+ *
  * @author Katuranau Maksimilyan
  */
 public class ListOfGoods {
-    private final List<Product> listOfGoods;
+    /**
+     * list of products.
+     */
+    private List<Product> listOfGoods;
 
     /**
-     * @param listOfGoods is list of products
+     * default constructor.
      */
-    public ListOfGoods(List<Product> listOfGoods) {
-        this.listOfGoods = listOfGoods;
-    }
-
     public ListOfGoods() {
         listOfGoods = new ArrayList<>();
     }
 
+    /**
+     * return list of products.
+     *
+     * @return list of products
+     */
     public List<Product> getListOfGoods() {
         return listOfGoods;
     }

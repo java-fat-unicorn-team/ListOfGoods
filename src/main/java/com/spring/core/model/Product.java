@@ -1,78 +1,93 @@
 package com.spring.core.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 /**
- * This class describes the structure of the product
+ * This class describes the structure of the product.
  *
  * @author Katuranau Maksimilyan
  */
 public class Product {
+    /**
+     * name of product.
+     */
     private String name;
+    /**
+     * price of product.
+     */
     private BigDecimal price;
+    /**
+     * weight of product.
+     */
     private int weight;
 
+    /**
+     * default constructor.
+     */
     public Product() {
     }
 
     /**
-     * @param name   is product's name
-     * @param price  is product's price
-     * @param weight is product's weight
+     * @param pName   is product's name
+     * @param pPrice  is product's price
+     * @param pWeight is product's weight
      */
-    public Product(String name, BigDecimal price, int weight) {
-        this.name = name;
-        this.price = price;
-        this.weight = weight;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public Product(final String pName, final BigDecimal pPrice,
+                   final int pWeight) {
+        this.name = pName;
+        this.price = pPrice;
+        this.weight = pWeight;
     }
 
     /**
-     * This method represents an object as a string
+     * @return name
+     */
+    public final String getName() {
+        return name;
+    }
+
+    /**
+     * @param pName name of product
+     */
+    public final void setName(final String pName) {
+        this.name = pName;
+    }
+
+    /**
+     * @return price
+     */
+    public final BigDecimal getPrice() {
+        return price;
+    }
+
+    /**
+     * @param pPrice price of product
+     */
+    public final void setPrice(final BigDecimal pPrice) {
+        this.price = pPrice;
+    }
+
+    /**
+     * @return weight
+     */
+    public final int getWeight() {
+        return weight;
+    }
+
+    /**
+     * @param pWeight weight of product
+     */
+    public final void setWeight(final int pWeight) {
+        this.weight = pWeight;
+    }
+
+    /**
+     * This method represents an object as a string.
      *
      * @return String value
      */
     @Override
-    public String toString() {
+    public final String toString() {
         return name + ": " + price + "$, " + weight + "g.";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return price == product.price &&
-                weight == product.weight &&
-                Objects.equals(name, product.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, price, weight);
     }
 }

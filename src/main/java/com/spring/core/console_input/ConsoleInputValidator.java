@@ -1,34 +1,47 @@
 package com.spring.core.console_input;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.io.InputStream;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * This class is used to enter information from the stream
+ * This class is used to enter information from the stream.
  *
  * @author Katuranau Maksimilyan
  */
 
 public class ConsoleInputValidator {
 
+    /**
+     * class to get data from console.
+     */
     private Scanner scanner;
 
     /**
-     * @param inputStream is the stream from which information will be scanned
+     * @param pScanner is class to get data from console
      */
     @Autowired
-    public ConsoleInputValidator(InputStream inputStream) {
-        scanner = new Scanner(inputStream);
+    public ConsoleInputValidator(final Scanner pScanner) {
+        scanner = pScanner;
     }
 
+    /**
+     * get next line from console.
+     *
+     * @return line entered in console
+     */
     public String next() {
         return scanner.next();
     }
 
-    public int nextInt() {
+    /**
+     * get next int from console.
+     *
+     * @throws InputMismatchException if entered not int
+     * @return int variable entered in console
+     */
+    public int nextInt() throws InputMismatchException {
         return scanner.nextInt();
     }
 }

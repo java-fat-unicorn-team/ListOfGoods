@@ -5,8 +5,9 @@ import com.spring.core.model.Product;
 import java.util.List;
 
 /**
- * Provides methods to get products from list
+ * Provides methods to get products from list.
  * Use this interface if you want to create a new way to store list of products
+ *
  * @author Katuranau Maksimilyan
  */
 public interface ListOfGoodsDao {

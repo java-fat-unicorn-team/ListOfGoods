@@ -28,6 +28,9 @@
         <maven.project.info.reports.plugin>3.0.0</maven.project.info.reports.plugin>
         <maven.failsafe.plugin>2.22.2</maven.failsafe.plugin>
         <exec.maven.plugin>1.6.0</exec.maven.plugin>
+        <maven.checkstyle.plugin>3.1.0</maven.checkstyle.plugin>
+        <maven.pmd.plugin>3.12.0</maven.pmd.plugin>
+        <pitest.maven>1.4.7</pitest.maven>
     </properties>
 
     <dependencies>
@@ -107,7 +110,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${exec.maven.plugin}</version>
                 <configuration>
-                    <mainClass>com.spring.core.App</mainClass>
+                    <mainClass>com.spring.core.runner.App</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -122,6 +125,66 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven.checkstyle.plugin}</version>
+                <configuration>
+                    <consoleOutput>true</consoleOutput>
+                    <violationSeverity>warning</violationSeverity>
+                    <failOnViolation>true</failOnViolation>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>checkstyle</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${maven.pmd.plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>check</goal></goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>11</targetJdk>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>${pitest.maven}</version>
+                <executions>
+                    <execution>
+                        <id>pit-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>mutationCoverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <targetClasses>
+                        <param>com.spring.core.config.*Initializer</param>
+                        <param>com.spring.core.dao.*</param>
+                        <param>com.spring.core.model.*</param>
+                        <param>com.spring.core.service.*</param>
+                        <param>com.spring.core.userinterface.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.spring.core.*</param>
+                    </targetTests>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class BasketInitializerTest {
-    private String BASKET_FILENAME = "classpath:basket-storage.json";
+    private String BASKET_FILENAME = "basket-storage.json";
     private BasketInitializer basketInitializer;
     private Basket basket;
     private Field field;
@@ -27,7 +27,7 @@ public class BasketInitializerTest {
         basket.getBasket().add(new Product("pan", new BigDecimal(9.12), 15));
         basket.getBasket().add(new Product("computer", new BigDecimal(3200.00), 2100));
         basketInitializer = new BasketInitializer(new ObjectMapper());
-        field = ReflectionUtils.findField(BasketInitializer.class, "BASKET_STORAGE_FILENAME");
+        field = ReflectionUtils.findField(BasketInitializer.class, "basketStorageFilename");
         ReflectionUtils.makeAccessible(field);
         ReflectionUtils.setField(field, basketInitializer, BASKET_FILENAME);
     }
@@ -58,7 +58,7 @@ public class BasketInitializerTest {
 
     @Test
     public void testGetBasketWrongFile() {
-        ReflectionUtils.setField(field, basketInitializer, "classpath:products-initializer.json");
+        ReflectionUtils.setField(field, basketInitializer, "products-initializer.json");
         Basket basket2 = basketInitializer.initializeBasket();
         assertEquals(0, basket2.getBasket().size());
     }

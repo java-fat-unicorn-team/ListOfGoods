@@ -7,14 +7,14 @@ import com.spring.core.model.Basket;
 import com.spring.core.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * This class provides methods to manage products basket
+ * This class provides methods to manage products basket.
  * products are stored in file
+ *
  * @author Katuranau Maksimilyan
  * {@see BasketDao}
  */
@@ -22,56 +22,94 @@ import java.util.List;
 @Profile("fromFile")
 public class InFileBasketDao implements BasketDao {
 
+    /**
+     * class which contains list of basket's products and loads from file.
+     */
     private Basket basket;
+    /**
+     * class which contains list of all products and loads from file.
+     */
     private final ListOfGoodsDao listOfProducts;
+    /**
+     * class that receives and saves to the file a list of products.
+     */
     private final BasketInitializer basketInitializer;
 
     /**
-     * @param listOfProducts is a class which contains list of all products and loads from file when project starts
-     * @param basketInitializer is  is a class that receives and saves to the file a list of products from the file
+     * @param pListOfProducts list of products
+     * @param pBasketInitializer basket initializer
+     * @param pBasket basket initializer
      */
     @Autowired
-    public InFileBasketDao(ListOfGoodsDao listOfProducts, BasketInitializer basketInitializer, Basket basket) {
-        this.listOfProducts = listOfProducts;
-        this.basketInitializer = basketInitializer;
-        this.basket = basket;
+    public InFileBasketDao(final ListOfGoodsDao pListOfProducts,
+                           final BasketInitializer pBasketInitializer,
+                           final Basket pBasket) {
+        this.listOfProducts = pListOfProducts;
+        this.basketInitializer = pBasketInitializer;
+        this.basket = pBasket;
     }
 
+    /**
+     * list of all products.
+     * @return list of products
+     */
     @Override
-    public List<Product> getAllProducts() {
+    public final List<Product> getAllProducts() {
         return listOfProducts.getProducts();
     }
 
+    /**
+     * list of products from basket.
+     * @return list of prodacts
+     */
     @Override
-    public List<Product> getProductsFromBasket() {
+    public final List<Product> getProductsFromBasket() {
         return basket.getBasket();
     }
 
+    /**
+     * product with entered index.
+     * @param index is index of product to be obtained
+     * @return product with entered index
+     */
     @Override
-    public Product getProduct(int index) {
+    public final Product getProduct(final int index) {
         return basket.getBasket().get(index);
     }
 
+    /**
+     * update product.
+     * @param index         is index of product from basket to be updated
+     * @param indexInBasket is index of product to be added
+     * @throws Exception if entered wrong index
+     */
     @Override
-    public void updateProduct(int index, int indexInBasket) throws Exception {
+    public final void updateProduct(final int index,
+                              final int indexInBasket) throws Exception {
         basket.getBasket().set(index, listOfProducts.getProduct(indexInBasket));
         basketInitializer.updateBasket(basket);
     }
 
+    /**
+     * add product.
+     * @param indexInBasket is index of product to be added
+     * @throws Exception if entered wrong index
+     */
     @Override
-    public void addProduct(int indexInBasket) throws Exception {
+    public final void addProduct(final int indexInBasket) throws Exception {
         basket.getBasket().add(listOfProducts.getProduct(indexInBasket));
         basketInitializer.updateBasket(basket);
 
     }
 
+    /**
+     * delete product.
+     * @param index product's index from basket to be deleted
+     * @throws Exception if entered wrong index
+     */
     @Override
-    public void deleteProduct(int index) throws Exception {
+    public final void deleteProduct(final int index) throws Exception {
         basket.getBasket().remove(index);
         basketInitializer.updateBasket(basket);
-    }
-
-    public void setBasket(Basket basket) {
-        this.basket = basket;
     }
 }

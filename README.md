@@ -11,7 +11,7 @@ Project is created with:
 * Spring core 5.1.7
 * Maven 3.5+
 * Git 2+
-* JUnit 5
+* JUnit 4
 	
 ## Deploy
 To run this project, install and run it locally using maven:

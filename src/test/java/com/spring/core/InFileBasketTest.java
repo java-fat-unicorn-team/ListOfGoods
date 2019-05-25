@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InFileBasketTest {
@@ -81,6 +81,7 @@ public class InFileBasketTest {
         when(listOfGoods.getProduct(1)).thenReturn(productsList.get(1));
         basket.updateProduct(2, 1);
         assertEquals(productsList.get(1), basket.getProduct(2));
+        verify(basketInitializer, times(1)).updateBasket(basketList);
     }
 
     @Test(expected = Exception.class)
@@ -103,6 +104,7 @@ public class InFileBasketTest {
         basket.addProduct(2);
         int sizeAfter = basket.getProductsFromBasket().size();
         assertEquals(sizeBefore + 1, sizeAfter);
+        verify(basketInitializer, times(1)).updateBasket(basketList);
     }
 
     @Test(expected = Exception.class)
@@ -117,6 +119,7 @@ public class InFileBasketTest {
         basket.deleteProduct(2);
         int sizeAfter = basket.getProductsFromBasket().size();
         assertFalse(sizeBefore == sizeAfter);
+        verify(basketInitializer, times(1)).updateBasket(basketList);
     }
 
     @Test(expected = Exception.class)

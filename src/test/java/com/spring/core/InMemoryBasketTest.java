@@ -58,14 +58,14 @@ public class InMemoryBasketTest {
     }
 
     @Test
-    public void testGetProduct() throws Exception {
+    public void testGetProduct() {
         assertEquals(listOfGoods.get(1), basket.getProduct(1));
         assertEquals(listOfGoods.get(1).getPrice(), basket.getProduct(1).getPrice());
         assertEquals(listOfGoods.get(1).getWeight(), basket.getProduct(1).getWeight());
     }
 
     @Test(expected = Exception.class)
-    public void testGetNonexistentProduct() throws Exception {
+    public void testGetNonexistentProduct() {
         int size = basket.getProductsFromBasket().size();
         basket.getProduct(size);
     }

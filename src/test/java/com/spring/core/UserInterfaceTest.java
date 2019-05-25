@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -77,7 +78,15 @@ public class UserInterfaceTest {
         verify(inputStream, times(1)).nextInt();
         verify(outputStream, times(2)).println(anyString());
         verify(basketService).getProduct(2);
+    }
 
+    @Test
+    public void testPrintProductFail() throws Exception {
+        when(inputStream.nextInt()).thenThrow(InputMismatchException.class);
+        when(inputStream.next()).thenReturn("1");
+        userInterface.printProduct();
+        verify(basketService, times(0)).getProduct(2);
+        verify(outputStream, times(2)).println(anyString());
     }
 
     @Test(expected = Exception.class)
@@ -85,6 +94,8 @@ public class UserInterfaceTest {
         when(inputStream.nextInt()).thenReturn(20);
         when(basketService.getProduct(20)).thenThrow(Exception.class);
         userInterface.printProduct();
+        verify(outputStream, times(1)).println(anyString());
+
     }
 
     @Test
@@ -98,6 +109,15 @@ public class UserInterfaceTest {
     }
 
     @Test
+    public void testAddProductFail() throws Exception {
+        when(inputStream.nextInt()).thenThrow(InputMismatchException.class);
+        when(inputStream.next()).thenReturn("1");
+        userInterface.addProduct();
+        verify(basketService, times(0)).addProduct(anyInt());
+        verify(outputStream, times(2)).println(anyString());
+    }
+
+    @Test
     public void testDeleteProduct() throws Exception {
         when(inputStream.nextInt()).thenReturn(2, 5, 7);
         userInterface.deleteProduct();
@@ -105,6 +125,15 @@ public class UserInterfaceTest {
         userInterface.deleteProduct();
         verify(outputStream, times(3)).println(anyString());
         verify(basketService, times(3)).deleteProduct(anyInt());
+    }
+
+    @Test
+    public void testDeleteProductFail() throws Exception {
+        when(inputStream.nextInt()).thenThrow(InputMismatchException.class);
+        when(inputStream.next()).thenReturn("1");
+        userInterface.deleteProduct();
+        verify(basketService, times(0)).deleteProduct(anyInt());
+        verify(outputStream, times(2)).println(anyString());
     }
 
     @Test(expected = Exception.class)
@@ -119,6 +148,15 @@ public class UserInterfaceTest {
         userInterface.updateProduct();
         verify(outputStream, times(2)).println(anyString());
         verify(basketService).updateProduct(anyInt(), anyInt());
+    }
+
+    @Test
+    public void testUpdateProductFail() throws Exception {
+        when(inputStream.nextInt()).thenThrow(InputMismatchException.class);
+        when(inputStream.next()).thenReturn("1");
+        userInterface.updateProduct();
+        verify(basketService, times(0)).updateProduct(anyInt(), anyInt());
+        verify(outputStream, times(2)).println(anyString());
     }
 
     @Test(expected = Exception.class)
@@ -138,5 +176,20 @@ public class UserInterfaceTest {
     public void testShowMenu() {
         userInterface.showMenu();
         verify(outputStream, times(8)).println(anyString());
+        verify(outputStream, times(1)).println(UserMenuChoice.PRINT.getInformation());
+        verify(outputStream, times(1)).println(UserMenuChoice.ADD.getInformation());
     }
+
+    @Test
+    public void testStart() throws Exception {
+        when(inputStream.next()).thenReturn("1", "2", "3", "9", "7");
+        when(inputStream.nextInt()).thenReturn(0);
+        userInterface.start();
+        verify(outputStream, atLeast(5)).println(anyString());
+        verify(basketService, times(1)).getProductsFromBasket();
+        verify(basketService, times(1)).getAllProducts();
+        verify(basketService, times(1)).getProduct(0);
+        verify(outputStream, times(48)).println(anyString());
+    }
+
 }

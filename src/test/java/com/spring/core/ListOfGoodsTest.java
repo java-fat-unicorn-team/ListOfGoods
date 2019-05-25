@@ -22,7 +22,6 @@ public class ListOfGoodsTest {
     @Mock
     private ListOfGoods listOfGoods;
     @InjectMocks
-
     private InMemoryListOfGoodsDao listOfGoodsDao;
     private static List<Product> productsList;
 

@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.PrintStream;
+import java.util.InputMismatchException;
 
 /**
- * Class using for interaction with users through the console
+ * Class using for interaction with users through the console.
  *
  * @author Katuranau Maksimilyan
  * {@see UserInterface}
@@ -18,27 +19,43 @@ import java.io.PrintStream;
 @Component
 public class ConsoleUserInterface implements UserInterface {
 
+    /**
+     * this class gets data from console.
+     */
     private ConsoleInputValidator inputStream;
+    /**
+     * this class prints data on the console.
+     */
     private PrintStream outputStream;
+    /**
+     * check if user entered close app.
+     */
     private boolean isClose;
-
+    /**
+     * class provides methods to manage basket.
+     */
     private BasketService basketService;
 
     /**
-     * @param basketService is class which provides methods to manage basket
-     * @param outputStream  is class to print data on the console
-     * @param inputStream   is class to get data from the console
+     * @param pBasketService is class which provides methods to manage basket
+     * @param pOutputStream  is class to print data on the console
+     * @param pInputStream   is class to get data from the console
      */
     @Autowired
-    public ConsoleUserInterface(BasketService basketService, PrintStream outputStream, ConsoleInputValidator inputStream) {
-        this.basketService = basketService;
-        this.outputStream = outputStream;
-        this.inputStream = inputStream;
+    public ConsoleUserInterface(final BasketService pBasketService,
+                                final PrintStream pOutputStream,
+                                final ConsoleInputValidator pInputStream) {
+        this.basketService = pBasketService;
+        this.outputStream = pOutputStream;
+        this.inputStream = pInputStream;
         this.isClose = false;
     }
 
+    /**
+     * main method in class to work with user.
+     */
     @Override
-    public void start() {
+    public final void start() {
         UserMenuChoice userChoice;
         while (!isClose) {
             showMenu();
@@ -52,22 +69,31 @@ public class ConsoleUserInterface implements UserInterface {
         }
     }
 
+    /**
+     * print products from basket.
+     */
     @Override
-    public void printProductsFromBasket() {
+    public final void printProductsFromBasket() {
         for (Product product : basketService.getProductsFromBasket()) {
             outputStream.println(product.toString());
         }
     }
 
+    /**
+     * print all products.
+     */
     @Override
-    public void printAllProducts() {
+    public final void printAllProducts() {
         for (Product product : basketService.getAllProducts()) {
             outputStream.println(product.toString());
         }
     }
 
+    /**
+     * prints menu.
+     */
     @Override
-    public void showMenu() {
+    public final void showMenu() {
         outputStream.println("\nMenu:");
         for (UserMenuChoice choice : UserMenuChoice.values()) {
             if (choice != UserMenuChoice.UNDEFINED) {
@@ -76,13 +102,23 @@ public class ConsoleUserInterface implements UserInterface {
         }
     }
 
+    /**
+     * get user's choice.
+     * @return user's choice
+     */
     @Override
-    public UserMenuChoice getChoice() {
+    public final UserMenuChoice getChoice() {
         return UserMenuChoice.get(inputStream.next());
     }
 
+    /**
+     * run user's choice.
+     * @param userChoice user's choice
+     * @throws Exception if user's choice is failed
+     */
     @Override
-    public void runChoice(UserMenuChoice userChoice) throws Exception {
+    public final void runChoice(final UserMenuChoice userChoice)
+            throws Exception {
         switch (userChoice) {
             case PRINT_ALL:
                 printAllProducts();
@@ -110,29 +146,67 @@ public class ConsoleUserInterface implements UserInterface {
         }
     }
 
+    /**
+     * print product.
+     * @throws Exception if user entered wrong index
+     */
     @Override
-    public void printProduct() throws Exception {
+    public final void printProduct() throws Exception {
         outputStream.println("Enter product's index to be printed");
-        outputStream.println(basketService.getProduct(inputStream.nextInt()).toString());
+        try {
+            outputStream.println(basketService.getProduct(
+                    inputStream.nextInt()).toString());
+        } catch (InputMismatchException e) {
+            inputStream.next();
+            outputStream.println("You entered not int...");
+        }
     }
 
+    /**
+     * delete product.
+     * @throws Exception if there is no such product
+     */
     @Override
-    public void deleteProduct() throws Exception {
+    public final void deleteProduct() throws Exception {
         outputStream.println("Enter product's index to be deleted from basket");
-        basketService.deleteProduct(inputStream.nextInt());
+        try {
+            basketService.deleteProduct(inputStream.nextInt());
+        } catch (InputMismatchException e) {
+            inputStream.next();
+            outputStream.println("You entered not int...");
+        }
     }
 
+    /**
+     * add product.
+     * @throws Exception if there is no such product
+     */
     @Override
-    public void addProduct() throws Exception {
+    public final void addProduct() throws Exception {
         outputStream.println("Enter product's index to be added to basket: ");
-        basketService.addProduct(inputStream.nextInt());
+        try {
+            basketService.addProduct(inputStream.nextInt());
+        } catch (InputMismatchException e) {
+            inputStream.next();
+            outputStream.println("You entered not int...");
+        }
     }
 
+    /**
+     * update product.
+     * @throws Exception if there is no such product
+     */
     @Override
-    public void updateProduct() throws Exception {
+    public final void updateProduct() throws Exception {
         outputStream.println("Enter product's index to be updated: ");
-        int index = inputStream.nextInt();
-        outputStream.println("Enter new product's index which will update old product: ");
-        basketService.updateProduct(index, inputStream.nextInt());
+        try {
+            int index = inputStream.nextInt();
+            outputStream.println("Enter new product's "
+                    + "index which will update old product: ");
+            basketService.updateProduct(index, inputStream.nextInt());
+        } catch (InputMismatchException e) {
+            inputStream.next();
+            outputStream.println("You entered not int...");
+        }
     }
 }

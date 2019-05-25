@@ -16,9 +16,12 @@ import org.springframework.util.ReflectionUtils;
 
 import java.io.PrintStream;
 import java.lang.reflect.Field;
+import java.util.InputMismatchException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 public class UserInterfaceTestIT {
     private static ApplicationContext context;
@@ -50,7 +53,7 @@ public class UserInterfaceTestIT {
 
     @Test
     public void testPrintProductsFromBasket() throws Exception {
-        Mockito.when(inputStream.nextInt()).thenReturn(3, 7);
+        when(inputStream.nextInt()).thenReturn(3, 7);
         userInterface.addProduct();
         userInterface.addProduct();
         int size = basketService.getProductsFromBasket().size();
@@ -69,30 +72,39 @@ public class UserInterfaceTestIT {
     @Test(expected = Exception.class)
     public void testPrintNonexistentProduct() throws Exception {
         int size = basketService.getProductsFromBasket().size();
-        Mockito.when(inputStream.nextInt()).thenReturn(size);
+        when(inputStream.nextInt()).thenReturn(size);
         userInterface.printProduct();
     }
 
     @Test
     public void testAddProduct() throws Exception {
         int sizeBefore = basketService.getProductsFromBasket().size();
-        Mockito.when(inputStream.nextInt()).thenReturn(3, 7);
+        when(inputStream.nextInt()).thenReturn(3, 7);
         userInterface.addProduct();
         userInterface.addProduct();
         int sizeAfter = basketService.getProductsFromBasket().size();
         assertEquals(sizeBefore + 2, sizeAfter);
     }
 
+    @Test
+    public void testAddProductFail() throws Exception {
+        int sizeBefore = basketService.getProductsFromBasket().size();
+        when(inputStream.nextInt()).thenThrow(InputMismatchException.class);
+        userInterface.addProduct();
+        int sizeAfter = basketService.getProductsFromBasket().size();
+        assertTrue(sizeBefore == sizeAfter);
+    }
+
     @Test(expected = Exception.class)
     public void testDeleteNonexistentProduct() throws Exception {
         int size = basketService.getProductsFromBasket().size();
-        Mockito.when(inputStream.nextInt()).thenReturn(size);
+        when(inputStream.nextInt()).thenReturn(size);
         userInterface.deleteProduct();
     }
 
     @Test
     public void testDeleteProduct() throws Exception {
-        Mockito.when(inputStream.nextInt()).thenReturn(5, 0);
+        when(inputStream.nextInt()).thenReturn(5, 0);
         userInterface.addProduct();
         int sizeBefore = basketService.getProductsFromBasket().size();
         userInterface.deleteProduct();
@@ -101,17 +113,44 @@ public class UserInterfaceTestIT {
     }
 
     @Test
+    public void testDeleteProductFail() throws Exception {
+        when(inputStream.nextInt()).thenReturn(5);
+        userInterface.addProduct();
+        int sizeBefore = basketService.getProductsFromBasket().size();
+        when(inputStream.nextInt()).thenThrow(InputMismatchException.class);
+        userInterface.deleteProduct();
+        int sizeAfter = basketService.getProductsFromBasket().size();
+        assertTrue(sizeBefore == sizeAfter);
+    }
+
+    @Test
     public void testUpdateProduct() throws Exception {
-        Mockito.when(inputStream.nextInt()).thenReturn(5, 3, 1, 7);
+        when(inputStream.nextInt()).thenReturn(5, 3, 1, 7);
         userInterface.addProduct();
         userInterface.addProduct();
         userInterface.updateProduct();
-        assertEquals(basketService.getProduct(1), basketService.getAllProducts().get(7));
+        assertEquals(basketService.getProduct(1).getWeight(),
+                basketService.getAllProducts().get(7).getWeight());
+        assertEquals(basketService.getProduct(1).getName(),
+                basketService.getAllProducts().get(7).getName());
+    }
+
+    @Test
+    public void testUpdateProductFail() throws Exception {
+        when(inputStream.nextInt()).thenReturn(5, 3);
+        userInterface.addProduct();
+        userInterface.addProduct();
+        when(inputStream.nextInt()).thenThrow(InputMismatchException.class);
+        userInterface.updateProduct();
+        assertNotEquals(basketService.getProduct(1).getWeight(),
+                basketService.getAllProducts().get(7).getWeight());
+        assertNotEquals(basketService.getProduct(1).getName(),
+                basketService.getAllProducts().get(7).getName());
     }
 
     @Test
     public void testGetChoice() {
-        Mockito.when(inputStream.next()).thenReturn("3");
+        when(inputStream.next()).thenReturn("3");
         assertEquals(UserMenuChoice.PRINT, userInterface.getChoice());
     }
 }

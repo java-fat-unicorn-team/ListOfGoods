@@ -1,5 +1,5 @@
 # ListOfGoods
-
+[![Build Status](https://travis-ci.com/java-fat-unicorn-team/ListOfGoods.svg?branch=master)](https://travis-ci.com/java-fat-unicorn-team/ListOfGoods)
 ## Main topic mof project
 It is just simple project which provides ability to manage the list of goods in your basket
 
@@ -28,3 +28,4 @@ Basket is stored in file
 ```
 $ mvn exec:java -Dspring.profiles.active=fromFile
 ```
+

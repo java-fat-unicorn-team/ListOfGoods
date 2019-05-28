@@ -150,7 +150,9 @@ public class UserInterfaceTestIT {
 
     @Test
     public void testGetChoice() {
-        when(inputStream.next()).thenReturn("3");
+        when(inputStream.next()).thenReturn("3", "5", "9");
         assertEquals(UserMenuChoice.PRINT, userInterface.getChoice());
+        assertEquals(UserMenuChoice.ADD, userInterface.getChoice());
+        assertEquals(UserMenuChoice.UNDEFINED, userInterface.getChoice());
     }
 }

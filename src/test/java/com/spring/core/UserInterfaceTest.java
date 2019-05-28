@@ -167,9 +167,10 @@ public class UserInterfaceTest {
 
     @Test
     public void testGetChoice() {
-        when(inputStream.next()).thenReturn("1", "5");
+        when(inputStream.next()).thenReturn("1", "5", "10");
         assertEquals(UserMenuChoice.PRINT_ALL, userInterface.getChoice());
         assertEquals(UserMenuChoice.ADD, userInterface.getChoice());
+        assertEquals(UserMenuChoice.UNDEFINED, userInterface.getChoice());
     }
 
     @Test
@@ -182,14 +183,18 @@ public class UserInterfaceTest {
 
     @Test
     public void testStart() throws Exception {
-        when(inputStream.next()).thenReturn("1", "2", "3", "9", "7");
+        when(inputStream.next()).thenReturn("1", "2", "3", "4", "5", "6", "9", null, "7");
+        when(basketService.getAllProducts()).thenReturn(list);
+        when(basketService.getProductsFromBasket()).thenReturn(list);
         when(inputStream.nextInt()).thenReturn(0);
+        when(basketService.getProduct(0)).thenThrow(Exception.class);
         userInterface.start();
-        verify(outputStream, atLeast(5)).println(anyString());
         verify(basketService, times(1)).getProductsFromBasket();
         verify(basketService, times(1)).getAllProducts();
         verify(basketService, times(1)).getProduct(0);
-        verify(outputStream, times(48)).println(anyString());
+        verify(basketService, times(1)).deleteProduct(0);
+        verify(basketService, times(1)).addProduct(0);
+        verify(basketService, times(1)).updateProduct(0, 0);
+        verify(outputStream, times(95)).println(anyString());
     }
-
 }

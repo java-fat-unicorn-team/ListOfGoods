@@ -59,6 +59,7 @@ public enum UserMenuChoice {
 
     /**
      * get choice.
+     *
      * @return choice
      */
     public String getChoice() {
@@ -66,15 +67,8 @@ public enum UserMenuChoice {
     }
 
     /**
-     * set choice.
-     * @param pChoice name of choice
-     */
-    public void setChoice(final String pChoice) {
-        this.choice = pChoice;
-    }
-
-    /**
      * get information about choice.
+     *
      * @return information about choice
      */
     public String getInformation() {
@@ -84,13 +78,15 @@ public enum UserMenuChoice {
     /**
      * @param userChoice is number of the menu item user chose
      * @return is the menu item user chose
+     * @throws RuntimeException if there is not such menu item
      */
-    public static UserMenuChoice get(final String userChoice) {
+    public static UserMenuChoice get(final String userChoice)
+            throws RuntimeException {
         for (UserMenuChoice choice : UserMenuChoice.values()) {
             if (choice.getChoice().equals(userChoice)) {
                 return choice;
             }
         }
-        return UNDEFINED;
+        return UserMenuChoice.UNDEFINED;
     }
 }

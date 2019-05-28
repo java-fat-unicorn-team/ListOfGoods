@@ -104,6 +104,7 @@ public class ConsoleUserInterface implements UserInterface {
 
     /**
      * get user's choice.
+     *
      * @return user's choice
      */
     @Override
@@ -113,6 +114,7 @@ public class ConsoleUserInterface implements UserInterface {
 
     /**
      * run user's choice.
+     *
      * @param userChoice user's choice
      * @throws Exception if user's choice is failed
      */
@@ -138,16 +140,17 @@ public class ConsoleUserInterface implements UserInterface {
             case UPDATE:
                 updateProduct();
                 break;
-            case CLOSE_APP:
-                isClose = true;
+            case UNDEFINED:
+                outputStream.println("There is not such menu item...");
                 break;
             default:
-                outputStream.println("There is not such menu item...");
+                isClose = true;
         }
     }
 
     /**
      * print product.
+     *
      * @throws Exception if user entered wrong index
      */
     @Override
@@ -164,6 +167,7 @@ public class ConsoleUserInterface implements UserInterface {
 
     /**
      * delete product.
+     *
      * @throws Exception if there is no such product
      */
     @Override
@@ -179,6 +183,7 @@ public class ConsoleUserInterface implements UserInterface {
 
     /**
      * add product.
+     *
      * @throws Exception if there is no such product
      */
     @Override
@@ -194,6 +199,7 @@ public class ConsoleUserInterface implements UserInterface {
 
     /**
      * update product.
+     *
      * @throws Exception if there is no such product
      */
     @Override

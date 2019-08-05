@@ -1,5 +1,6 @@
 # ListOfGoods
 [![Build Status](https://travis-ci.com/java-fat-unicorn-team/ListOfGoods.svg?branch=master)](https://travis-ci.com/java-fat-unicorn-team/ListOfGoods)
+[![codecov](https://codecov.io/gh/java-fat-unicorn-team/ListOfGoods/branch/master/graph/badge.svg)](https://codecov.io/gh/java-fat-unicorn-team/ListOfGoods)
 ## Main topic mof project
 It is just simple project which provides ability to manage the list of goods in your basket
 

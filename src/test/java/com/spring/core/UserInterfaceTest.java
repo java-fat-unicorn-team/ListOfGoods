@@ -183,18 +183,18 @@ public class UserInterfaceTest {
 
     @Test
     public void testStart() throws Exception {
-        when(inputStream.next()).thenReturn("1", "2", "3", "4", "5", "6", "9", null, "7");
+        when(inputStream.next()).thenReturn("1", "2", "3", "3", "4", "5", "6", "9", null, "7");
         when(basketService.getAllProducts()).thenReturn(list);
         when(basketService.getProductsFromBasket()).thenReturn(list);
         when(inputStream.nextInt()).thenReturn(0);
-        when(basketService.getProduct(0)).thenThrow(Exception.class);
+        when(basketService.getProduct(anyInt())).thenReturn(new Product()).thenThrow(Exception.class);
         userInterface.start();
-        verify(basketService, times(1)).getProductsFromBasket();
-        verify(basketService, times(1)).getAllProducts();
-        verify(basketService, times(1)).getProduct(0);
-        verify(basketService, times(1)).deleteProduct(0);
-        verify(basketService, times(1)).addProduct(0);
-        verify(basketService, times(1)).updateProduct(0, 0);
-        verify(outputStream, times(95)).println(anyString());
+        verify(basketService).getProductsFromBasket();
+        verify(basketService).getAllProducts();
+        verify(basketService, times(2)).getProduct(anyInt());
+        verify(basketService).deleteProduct(0);
+        verify(basketService).addProduct(0);
+        verify(basketService).updateProduct(0, 0);
+        verify(outputStream, times(106)).println(anyString());
     }
 }
